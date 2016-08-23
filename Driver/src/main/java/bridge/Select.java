@@ -1,5 +1,7 @@
 package bridge;
 
+
+
 import java.util.List;
 
 import database.Database;
