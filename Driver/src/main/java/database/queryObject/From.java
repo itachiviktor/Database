@@ -1,9 +1,7 @@
 package database.queryObject;
 
-import java.util.List;
-
-import database.Database;
-import datastructure.Instance;
+import database.LoadedDatabase;
+import datastructure.TileMap;
 
 public class From {
 	public String map;
@@ -14,7 +12,7 @@ public class From {
 		this.map = map;
 	}
 	
-	public List<Instance> execute(Database db){
+	public TileMap execute(LoadedDatabase db){
 		if(select != null){
 			return select.execute();
 		}

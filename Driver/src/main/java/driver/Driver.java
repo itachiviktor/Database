@@ -5,21 +5,22 @@ import java.util.List;
 
 import org.json.JSONObject;
 
-import database.Database;
+import database.LoadedDatabase;
 import datastructure.ClassDefinition;
 import datastructure.Instance;
+import datastructure.TileMap;
 
 public class Driver {
-	public List<Instance> map; 
+	public TileMap map; 
 	public List<ClassDefinition> classes;
 	public List<Integer> results;
 	
 	public List<Instance> resultSetList;
 	
-	private Database db;
+	private LoadedDatabase db;
 	private JSONDeserializer deserializer;
 	
-	public Driver(Database db) {
+	public Driver(LoadedDatabase db) {
 		this.db = db;
 		deserializer = new JSONDeserializer();
 		
@@ -47,11 +48,13 @@ public class Driver {
 	
 	
 
-	public List<Instance> getMap() {
+	
+
+	public TileMap getMap() {
 		return map;
 	}
 
-	public void setMap(List<Instance> map) {
+	public void setMap(TileMap map) {
 		this.map = map;
 	}
 
@@ -73,7 +76,7 @@ public class Driver {
 	
 	public String mapInstancesString(){
 		StringBuilder sb = new StringBuilder();
-		for(Instance x : this.map){
+		for(Instance x : this.map.getMap()){
 			sb.append(x.toString());
 			sb.append(System.lineSeparator());
 		}

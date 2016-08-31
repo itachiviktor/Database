@@ -11,21 +11,22 @@ import datastructure.ClassDefinition;
 import datastructure.Instance;
 import datastructure.NumberPrimitiv;
 import datastructure.StringPrimitiv;
+import datastructure.TileMap;
 
 public class JSONDeserializer {
 	
-	public List<Instance> map; 
+	public TileMap map; 
 	public List<ClassDefinition> classes;
 	public List<Integer> results;
 	
 	public JSONDeserializer() {
-		map = new ArrayList<Instance>();
+		map = new TileMap();
 		classes = new ArrayList<ClassDefinition>();
 		results = new ArrayList<Integer>();
 	}
 	
-	public List<Instance> getInstances(JSONObject databaseAnswer){
-		map = new ArrayList<Instance>();
+	public TileMap getInstances(JSONObject databaseAnswer){
+		map = new TileMap();
 		JSONArray instances = databaseAnswer.getJSONArray("instances");
 		
 		int idValue = 0;
@@ -39,21 +40,29 @@ public class JSONDeserializer {
 			
 			Iterator it = objectSon.keys();
 			String className = objectSon.getString("className");
+			int zindex = objectSon.getInt("zindex");
+			int zlayer = objectSon.getInt("zlayer");
 			
 			if(className.equals("String")){
 				StringPrimitiv inst = new StringPrimitiv("String", classes, map);
 				inst.setAttribute((String)objectSon.get("value"));
 				inst.id = idValue;
+				inst.zindex = zindex;
+				inst.zlayer = zlayer;
 				map.add(inst);
 			}else if(className.equals("Number")){
 				NumberPrimitiv inst = new NumberPrimitiv("Number", classes, map);
 				inst.setAttribute((Number)objectSon.get("value"));
 				inst.id = idValue;
+				inst.zindex = zindex;
+				inst.zlayer = zlayer;
 				map.add(inst);
 			}else if(className.equals("Boolean")){
 				BooleanPrimitiv inst = new BooleanPrimitiv("Boolean", classes, map);
 				inst.setAttribute((Boolean)objectSon.get("value"));
 				inst.id = idValue;
+				inst.zindex = zindex;
+				inst.zlayer = zlayer;
 				map.add(inst);
 			}else{
 				Instance inst = new Instance(className, classes, map);
@@ -65,6 +74,8 @@ public class JSONDeserializer {
 					}
 				}
 				inst.id = idValue;	
+				inst.zindex = zindex;
+				inst.zlayer = zlayer;
 				map.add(inst);
 			}
 		}
@@ -89,7 +100,17 @@ public class JSONDeserializer {
 			while(attnames.hasNext()){
 				String attnam = (String)attnames.next();//itt megvannak az attribútumnevek
 				
-				cdf.getAttributes().put(attnam, (String)atrributes.get(attnam)); //atrributes.get(attnam)   itt az attribútum értékei vannak
+				String attr = (String)atrributes.get(attnam);
+				String[] def = attr.split(" ");
+				
+				if(def.length > 1){
+					cdf.defaultValues.put(attnam, def[2]);
+					cdf.getAttributes().put(attnam, def[0]);
+				}else{
+					cdf.getAttributes().put(attnam, (String)atrributes.get(attnam));//atrributes.get(attnam)   itt az attribútum értékei vannak
+				}
+				
+				
 			}
 			
 			classes.add(cdf);

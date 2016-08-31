@@ -7,8 +7,8 @@ import org.json.JSONObject;
 public class NumberPrimitiv extends Instance{
 	public Number value;
 	
-	public NumberPrimitiv(String className, List<ClassDefinition> classes, List<Instance> terkep) {
-		super(className, classes, terkep);
+	public NumberPrimitiv(String className, List<ClassDefinition> classes, TileMap map) {
+		super(className, classes, map);
 		
 	}
 	
@@ -17,6 +17,8 @@ public class NumberPrimitiv extends Instance{
 		JSONObject ob = new JSONObject();
 		ob.put("className", "Number");
 		ob.put("value", value);
+		ob.put("zindex", zindex);
+		ob.put("zlayer", zlayer);
 		return ob;
 	}
 	

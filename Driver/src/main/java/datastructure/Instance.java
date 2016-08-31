@@ -19,17 +19,20 @@ public class Instance {
 	
 	public int id;
 	
+	public int zindex;
+	public int zlayer;
+	
 	public InstanceProviderFromMap provider;
 	
-	public List<Instance> terkep;
+	public TileMap map;
 	public List<ClassDefinition> classes;
 	
-	public Instance(String className, List<ClassDefinition> classes, List<Instance> terkep) {
+	public Instance(String className, List<ClassDefinition> classes, TileMap map) {
 	
-		this.terkep = terkep;
+		this.map = map;
 		this.classes = classes;
 		
-		this.provider = new InstanceProviderFromMap(terkep);
+		this.provider = new InstanceProviderFromMap(map);
 		this.attributes = new HashMap<String, Integer>();
 		
 		for(ClassDefinition x : classes){
@@ -53,6 +56,10 @@ public class Instance {
 	public void setAttribute(String attributeName, Integer value){
 		if(attributeName.equals("id")){
 			this.id = value;
+		}else if(attributeName.equals("zindex")){
+			this.zindex = value;
+		}else if(attributeName.equals("zlayer")){
+			this.zlayer = value;
 		}else{
 			for(String x : attributes.keySet()){
 				if(x.equals(attributeName)){
@@ -62,7 +69,6 @@ public class Instance {
 				}
 			}
 		}
-		
 	}
 	
 	public Instance getAttribute(String attributeName){
@@ -83,6 +89,8 @@ public class Instance {
 		JSONObject inner = new JSONObject();
 		
 		inner.put("className", className);
+		inner.put("zindex", zindex);
+		inner.put("zlayer", zlayer);
 		for(String x : attributes.keySet()){
 			inner.put("@" + x, attributes.get(x));
 		}
@@ -101,6 +109,8 @@ public class Instance {
 		StringBuilder sb = new StringBuilder() ;
 		sb.append("id: " + id);
 		sb.append(" className: " + className + " ");
+		sb.append("zindex: " + zindex + " ");
+		sb.append("zlayer: " + zlayer + " ");
 		for(String x : attributes.keySet()){
 			sb.append(x + ": " + attributes.get(x) + " ");
 		}

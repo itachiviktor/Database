@@ -1,6 +1,7 @@
 package datastructure;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * This class is a Service. By using this class, user can make a class 
@@ -19,33 +20,33 @@ public class ClassDefinitionProvider {
 	private ClassDefinition position;
 	private ClassDefinition node;
 	
-	public ClassDefinitionProvider(List<ClassDefinition> classes) {		
-		string = new ClassDefinition("String");
-		number = new ClassDefinition("Number");
-		bool = new ClassDefinition("Boolean");
+	public ClassDefinitionProvider(List<ClassDefinition> classes, List<TileMap> maps) {		
+		string = new ClassDefinition("String", maps, classes);
+		number = new ClassDefinition("Number", maps, classes);
+		bool = new ClassDefinition("Boolean", maps, classes);
 		
-		point = new ClassDefinition("Point");
+		point = new ClassDefinition("Point", maps, classes);
 		point.getAttributes().put("x", "Number");
 		point.getAttributes().put("y", "Number");
 		
-		size = new ClassDefinition("Size");
+		size = new ClassDefinition("Size", maps, classes);
 		size.getAttributes().put("width", "Number");
 		size.getAttributes().put("height", "Number");
 		
-		vector = new ClassDefinition("Vector");
+		vector = new ClassDefinition("Vector", maps, classes);
 		vector.getAttributes().put("dx", "Number");
 		vector.getAttributes().put("dy", "Number");
 		
-		rectangle = new ClassDefinition("Rectangle");
+		rectangle = new ClassDefinition("Rectangle", maps, classes);
 		rectangle.getAttributes().put("location", "Point");
 		rectangle.getAttributes().put("size", "Size");
 		
-		position = new ClassDefinition("Position");
+		position = new ClassDefinition("Position", maps, classes);
 		position.getAttributes().put("location", "Point");
 		position.getAttributes().put("direction", "Vector");
 		
 		
-		node = new ClassDefinition("Node");
+		node = new ClassDefinition("Node", maps, classes);
 		node.getAttributes().put("location", "Point");
 		node.getAttributes().put("direction", "Vector");
 		node.getAttributes().put("next", "Node");

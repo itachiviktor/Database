@@ -4,18 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import datastructure.Instance;
+import datastructure.TileMap;
 
 public class Where {
 	String bal;
 	String jobb;
 	String op;
-	List<Instance> inst;
+	TileMap inst;
+	
+	WhereElement root;
 	
 	public Where() {
-		inst = new ArrayList<Instance>();
+		inst = new TileMap();
 	}
 	
-	public List<Instance> execute(List<Instance> list){
+	public TileMap execute(TileMap list){
 		for(int i=0;i<list.size();i++){
 			Integer id = list.get(i).id;
 			if(op.equals("<")){
