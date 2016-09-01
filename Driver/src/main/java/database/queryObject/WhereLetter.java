@@ -1,23 +1,84 @@
 package database.queryObject;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import database.InMemoryDatabase;
+import datastructure.Instance;
+
 public class WhereLetter implements WhereElement{
 	
 	int right;
-	Operators op;
+	Operators operator;
 	boolean ret;
 	
-	String left;
-	String[] leftattr;
+	Instance leftInstanceValue;
+	Boolean leftBoolValue;
+	Number leftNumberValue;
+	
+	Instance rightInstanceValue;
+	Boolean rightBoolValue;
+	Number rightNumberValue;
+	
+	String rightOperandClassName;
+	
+	public Operand leftOperand;
+	public Operand rightOperand;
+	
+	public Instance selectedInstance;
 	
 	int id;
 	
+	
+	public WhereLetter(Operand leftOperand, Operand rightOperand, Operators operator) {
+		this.leftOperand = leftOperand;
+		this.rightOperand = rightOperand;
+		this.operator = operator;
+		
+	}
+	
+	
 	public WhereLetter() {
-		if(left != null){
-			leftattr = left.split("\\.");
+		// TODO Auto-generated constructor stub
+	}
+	
+	public void setSelectedInstance(Instance inst){
+		this.selectedInstance = inst;
+
+		leftInstanceValue = null;
+		leftBoolValue = null;
+		leftNumberValue = null;
+		
+		rightInstanceValue = null;
+		rightBoolValue = null;
+		rightNumberValue = null;
+		
+		if(leftOperand.getOperand(inst) instanceof Boolean){
+			leftBoolValue = leftOperand.getOperand(inst);
+		}else if(leftOperand.getOperand(inst) instanceof Number){
+			leftNumberValue = leftOperand.getOperand(inst);
+		}else if(leftOperand.getOperand(inst) instanceof Instance){
+			leftInstanceValue = leftOperand.getOperand(inst);
+		}
+		
+		if(rightOperand.getOperand(inst) instanceof Boolean){
+			rightBoolValue = rightOperand.getOperand(inst);
+		}else if(rightOperand.getOperand(inst) instanceof Number){
+			rightNumberValue = rightOperand.getOperand(inst);
+		}else if(rightOperand.getOperand(inst) instanceof Instance){
+			rightInstanceValue = rightOperand.getOperand(inst);
 		}
 	}
-
+	
+	
 	public boolean execute() {
+		/*itt kell kiszámolni*/
+		
+		if(leftInstanceValue != null && rightInstanceValue != null){
+			return leftInstanceValue.operate(rightInstanceValue, operator);
+		}
+		
+		
 		return ret;
 		/*if(op == Operators.EQ){
 			return left == right;

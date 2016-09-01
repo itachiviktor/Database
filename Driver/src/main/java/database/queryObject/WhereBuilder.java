@@ -1,42 +1,65 @@
 package database.queryObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-import database.LoadedDatabase;
-import datastructure.Instance;
-import datastructure.TileMap;
-
-public class QueryObjectTest {
-	public static void main(String[] args) {
-		LoadedDatabase db = new LoadedDatabase();
-		
+public class WhereBuilder {
+	public List<WhereNode> nodes;
+	public List<WhereLetter> letters;
+	
+	public WhereNode root;
+	public WhereNode actualNode;
+	
+	public WhereBuilder() {
+		this.nodes = new ArrayList<WhereNode>();
+		this.letters = new ArrayList<WhereLetter>();
+	}
+	
+	public void makeRoot(){
+		root = new WhereNode(null);
+		actualNode = root;
+		nodes.add(root);
+	}
+	
+	public void addLeftChild(){
+		actualNode.leftChild = new WhereNode(actualNode);
+		nodes.add((WhereNode)actualNode.leftChild);
+	}
+	
+	public void addRightChild(){
+		actualNode.rightChild = new WhereNode(actualNode);
+		nodes.add((WhereNode)actualNode.rightChild);
+	}
+	
+	public void addLeftChildLetter(){
+		actualNode.leftChild = new WhereLetter();
+		letters.add((WhereLetter)actualNode.leftChild);
+	}
+	
+	public void addRightChildLetter(){
+		actualNode.rightChild = new WhereLetter();
+		letters.add((WhereLetter)actualNode.rightChild);
+	}
+	
+	
+	public void moveToParent(){
+		actualNode = actualNode.parent;
+	}
+	
+	
+	
+	
+	
+	public boolean build(){
 		Postorder order = new Postorder();
 		
 		
-		Select belso = new Select(db, "mine");
-		belso.where.op = ">";
-		belso.where.jobb = "3";
-		
-		Select select = new Select(db, "mine.x");
-		select.where.op = "<";
-		select.where.jobb = "5";
-		select.from.select = belso;
-		
-		Select attros = new Select(db, "mine.stone.location.x");
-		
-		
-		TileMap l = select.execute();
-		
-		/*for(int i=0;i<l.size();i++){
-			System.out.println(l.get(i));
-		}*/
-		
 		WhereNode ten = new WhereNode(null);
-		WhereNode twelve = new WhereNode(ten);
-		WhereNode thirty = new WhereNode(ten);
-		WhereNode fourthy = new WhereNode(thirty);
-		WhereNode fifthy = new WhereNode(fourthy);
+		WhereNode twelve = new WhereNode(null);
+		WhereNode thirty = new WhereNode(null);
+		WhereNode fourthy = new WhereNode(null);
+		WhereNode fifthy = new WhereNode(null);
 		
 		WhereLetter one = new WhereLetter();
 		WhereLetter two = new WhereLetter();
@@ -104,12 +127,11 @@ public class QueryObjectTest {
 				heapLoad(resHeap, (WhereNode)res.get(i));
 			}
 		}
-		
-		System.out.println("eredmény");
-		for(int i=0;i<resHeap.size();i++){
+	
+		return resHeap.peek();
+		/*for(int i=0;i<resHeap.size();i++){
 			System.out.println(" " + resHeap.peek());
-		}
-		
+		}*/
 	}
 	
 	public static void heapLoad(Stack<Boolean> heap, boolean value){

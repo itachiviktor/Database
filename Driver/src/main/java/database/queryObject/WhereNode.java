@@ -1,6 +1,5 @@
 package database.queryObject;
 
-
 public class WhereNode implements WhereElement{
 	
 	WhereElement leftChild;
@@ -9,14 +8,26 @@ public class WhereNode implements WhereElement{
 	
 	Operators operator;
 	
-	public WhereNode() {
-		
+	public WhereNode parent;
+	/*A gyökérnek nincs szülője*/
+	
+	boolean not = false;/*eza azt jelenti az operátorra nézve, hogy OR Not, azaz van e hozzá not.*/
+	
+	public WhereNode(WhereNode parent) {
+		this.parent = parent;
 	}
 
 	public boolean execute() {
 		if(operator == Operators.AND){
+			if(not){
+				return (leftChild.execute() && !rightChild.execute());
+			}
 			return (leftChild.execute() && rightChild.execute());
 		}else if(operator == Operators.OR){
+			if(not){
+				System.out.println("asd");
+				return (leftChild.execute() || !rightChild.execute());
+			}
 			return (leftChild.execute() || rightChild.execute());
 		}
 		
@@ -25,8 +36,14 @@ public class WhereNode implements WhereElement{
 	
 	public boolean execute(boolean left, boolean right){
 		if(operator == Operators.AND){
+			if(not){
+				return (left && !right);
+			}
 			return (left && right);
 		}else if(operator == Operators.OR){
+			if(not){
+				return (left || !right);
+			}
 			return (left || right);
 		}
 		
@@ -53,7 +70,4 @@ public class WhereNode implements WhereElement{
 	public void setLeftChild(WhereElement child) {
 		this.leftChild = child;
 	}
-	
-
-
 }

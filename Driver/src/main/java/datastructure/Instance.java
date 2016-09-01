@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.json.JSONObject;
 
+import database.queryObject.Operators;
 import driver.Result;
 
 public class Instance {
@@ -51,6 +52,15 @@ public class Instance {
 		/*Itt beállítjuk neki a clanname típusát is.*/
 		this.className = classType.className;
 		
+	}
+	
+	public boolean hasThisAttribute(String attributeName){
+		for(String x : attributes.keySet()){
+			if(x.equals(attributeName)){
+				return true;
+			}
+		}
+		return false;
 	}
 	
 	public void setAttribute(String attributeName, Integer value){
@@ -101,6 +111,24 @@ public class Instance {
 
 	public <T> T getValue() {
 		return null;
+	}
+	
+	public boolean operate(Instance otherOperande, Operators operator){
+		if(operator == Operators.CLOSEST){
+			
+		}else if(operator == Operators.COLLIDE){
+			
+		}
+		
+		return true;
+	}
+	
+	public boolean isOperator(String className){
+		if(this.className.equals(className)){
+			return true;
+		}else{
+			return false;
+		}
 	}
 	
 	

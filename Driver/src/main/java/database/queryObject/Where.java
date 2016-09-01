@@ -19,8 +19,18 @@ public class Where {
 	}
 	
 	public TileMap execute(TileMap list){
+		TileMap result = new TileMap(list.getMapName());
+		
+		boolean validInstance = false;
+		
 		for(int i=0;i<list.size();i++){
 			Integer id = list.get(i).id;
+			
+			
+			
+			
+			
+			/*
 			if(op.equals("<")){
 				if(id < Integer.parseInt(jobb)){
 					inst.add(list.get(i));
@@ -33,8 +43,8 @@ public class Where {
 				if(id == Integer.parseInt(jobb)){
 					inst.add(list.get(i));
 				}
-			}
+			}*/
 		}
-		return this.inst;
+		return result;
 	}
 }
