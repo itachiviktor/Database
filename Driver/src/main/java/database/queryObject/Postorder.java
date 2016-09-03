@@ -4,18 +4,35 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+import database.queryObject.postorder.PostorderTraveler;
+
 public class Postorder {
-	public List<WhereElement> postorderTraversal(WhereElement root) {
+	
+	public static List<WhereElement> postorderTraversal(WhereElement root){
+		PostorderTraveler traveler = new PostorderTraveler();
+		return traveler.postorderTraversal(root);
+	}
+	
+	/*public static List<WhereElement> postorderTraversal(WhereElement root) {
 	    List<WhereElement> res = new ArrayList<WhereElement>();
 	 
+	    
+	    WhereNode copy = (WhereNode)root;
+	    try {
+			copy = (WhereNode)copy.clone();
+		} catch (CloneNotSupportedException e) {
+			e.printStackTrace();
+		}
+	    
 	    if(root==null) {
 	        return res;
 	    }
 	 
 	    Stack<WhereElement> stack = new Stack<WhereElement>();
-	    stack.push(root);
+	    stack.push(copy);
 	 
 	    while(!stack.isEmpty()) {
+	    	
 	        WhereElement temp = stack.peek();
 	        if(temp.getLeftChild() == null && temp.getRightChild() == null) {
 	            WhereElement pop = stack.pop();
@@ -33,7 +50,6 @@ public class Postorder {
 	            }
 	        }
 	    }
-	 
 	    return res;
-	}
+	}*/
 }

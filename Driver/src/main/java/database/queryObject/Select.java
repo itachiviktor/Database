@@ -17,7 +17,6 @@ public class Select {
 	
 	public Select(LoadedDatabase db, String selectObject) {
 		this.db = db;
-		where = new Where();
 		from = new From("asd");
 		
 		this.selectObject = selectObject;
@@ -25,7 +24,7 @@ public class Select {
 		
 	}
 	
-	public TileMap execute(){
+	public List<Instance> execute(){
 		return where.execute(from.execute(db));
 	}
 }

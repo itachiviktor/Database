@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import database.queryObject.Operators;
+
 public class BooleanPrimitiv extends Instance{
 	public Boolean value;
 	
@@ -24,6 +26,31 @@ public class BooleanPrimitiv extends Instance{
 	@Override
 	public <T> T getValue() {
 		return (T) value;
+	}
+	
+	@Override
+	public boolean operate(Instance otherOperande, Operators operator) {
+		if(otherOperande instanceof BooleanPrimitiv){
+			if(operator == Operators.EQ){
+				return this.value == otherOperande.getValue();
+			}else if(operator == Operators.NE){
+				return this.value != otherOperande.getValue();
+			}
+		}
+		
+		return false;
+	}
+	
+	@Override
+	public boolean operate(Boolean otherOperande, Operators operator) {
+		if(operator == Operators.EQ){
+			return this.value == otherOperande;
+		}else if(operator == Operators.NE){
+			return this.value != otherOperande;
+		}
+		
+		/*különben hibát kellene dobnia*/
+		return false;
 	}
 	
 	public void setAttribute(Boolean value){

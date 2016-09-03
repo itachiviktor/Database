@@ -14,86 +14,73 @@ public class QueryObjectTest {
 		Postorder order = new Postorder();
 		
 		
-		Select belso = new Select(db, "mine");
-		belso.where.op = ">";
-		belso.where.jobb = "3";
-		
-		Select select = new Select(db, "mine.x");
-		select.where.op = "<";
-		select.where.jobb = "5";
-		select.from.select = belso;
-		
-		Select attros = new Select(db, "mine.stone.location.x");
+		Select test = new Select(db, "mine");
 		
 		
-		TileMap l = select.execute();
+		for(int i=0;i<db.getMap().size();i++){
+			System.out.println(db.getMap().get(i));
+		}
 		
-		/*for(int i=0;i<l.size();i++){
-			System.out.println(l.get(i));
-		}*/
+		Operand op1 = new Operand("mine.zindex",true);
+		Operand op2 = new Operand("0",false);
+		Operators oper1 = Operators.EQ;
 		
-		WhereNode ten = new WhereNode(null);
-		WhereNode twelve = new WhereNode(ten);
-		WhereNode thirty = new WhereNode(ten);
-		WhereNode fourthy = new WhereNode(thirty);
-		WhereNode fifthy = new WhereNode(fourthy);
+		Operand op3 = new Operand("mine.zlayer",true);
+		Operand op4 = new Operand("0",false);
+		Operators oper2 = Operators.EQ;
 		
-		WhereLetter one = new WhereLetter();
-		WhereLetter two = new WhereLetter();
-		WhereLetter three = new WhereLetter();
-		WhereLetter four = new WhereLetter();
-		WhereLetter five = new WhereLetter();
-		WhereLetter six = new WhereLetter();
+		Operand op5 = new Operand("mine", true);
+		Operand op6 = new Operand("Number", false);
+		Operators oper3 = Operators.LT;
 		
-		one.ret = false;
-		one.id = 1;
+		Operand op7 = new Operand("mine", true);
+		Operand op8 = new Operand("Mine", false);
+		Operators oper4 = Operators.IS;
 		
-		two.ret = false;
-		two.id = 2;
 		
-		three.ret = false;
-		three.id = 3;
+		WhereLetter letter1 = new WhereLetter(op1, op2, oper1);
 		
-		four.ret = false;
-		four.id = 4;
+		WhereLetter letter2 = new WhereLetter(op3, op4, oper2);
 		
-		five.ret = false;
-		five.id = 5;
+		WhereLetter letter3 = new WhereLetter(op5, op6, oper3);
 		
-		six.ret = true;
-		six.id = 6;
+		WhereLetter letter4 = new WhereLetter(op7, op8, oper4);
 		
-		ten.leftChild = twelve;
-		ten.rightChild = fifthy;
-		ten.id = 10;
-		ten.operator = Operators.OR;
-		ten.not = true;
+		WhereNode node = new WhereNode(letter1, letter2);
+		node.setOperator(Operators.AND);
 		
-		twelve.leftChild = thirty;
-		twelve.rightChild = fourthy;
-		twelve.id = 20;
-		twelve.operator = Operators.OR;
 		
-		thirty.leftChild = one;
-		thirty.rightChild = two;
-		thirty.id = 30;
-		thirty.operator = Operators.AND;
+		WhereNode other = new WhereNode(letter3, letter4);
+		other.setOperator(Operators.OR);
 		
-		fourthy.leftChild = three;
-		fourthy.rightChild = four;
-		fourthy.id = 40;
-		fourthy.operator = Operators.OR;
+		WhereNode rootos = new WhereNode(node, other);
+		rootos.setOperator(Operators.AND);
 		
-		fifthy.leftChild = five;
-		fifthy.rightChild = six;
-		fifthy.id = 50;
-		fifthy.operator = Operators.AND;
+		Where where = new Where();
+		where.setRoot(rootos);
 		
-		List<WhereElement> res = order.postorderTraversal(ten);
 		
-		/*for(int i=0;i<res.size();i++){
-			System.out.println(res.get(i).toString());
-		}*/
+		
+		
+		List<Instance> ini = where.execute(db.getMap().getMap());
+		
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		
+		for(int i=0;i<ini.size();i++){
+			System.out.println(ini.get(i));
+		}
+		
+		//letter.setCheckInstance(db.getMap().getMap().get(4));
+		
+		
+		
+		
+		/*List<WhereElement> res = order.postorderTraversal(node);
+		
+		
 		
 		Stack<Boolean> resHeap = new Stack<Boolean>();
 		
@@ -103,12 +90,12 @@ public class QueryObjectTest {
 			}else{
 				heapLoad(resHeap, (WhereNode)res.get(i));
 			}
-		}
+		}*/
 		
-		System.out.println("eredmény");
+		/*System.out.println("eredmény");
 		for(int i=0;i<resHeap.size();i++){
 			System.out.println(" " + resHeap.peek());
-		}
+		}*/
 		
 	}
 	

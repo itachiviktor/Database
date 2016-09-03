@@ -3,14 +3,18 @@ package database.queryObject;
 import datastructure.Instance;
 
 public class Operand {
-	String longOperand;
+	public String longOperand;
 	
-	String[] attributes;
-	Boolean boolValue;
-	Number numberValue;
-	String className;
+	public String[] attributes;
+	public Boolean boolValue;
+	public Number numberValue;
+	public String className;
 	
-	public Operand(String longOperand) {
+	public boolean isLeftOperand;
+	
+	public Operand(String longOperand, boolean isLeftOperand) {
+		this.isLeftOperand = isLeftOperand;
+		
 		if(longOperand.contains(".")){
 			attributes = longOperand.split("\\.");
 		}else{
@@ -31,7 +35,15 @@ public class Operand {
 			for(int i=1;i<attributes.length;i++){
 				act = actual.hasThisAttribute(attributes[i]);
 				if(act){
-					actual = actual.getAttribute(attributes[i]);
+					if(attributes[i].equals("id")){
+						return (T)actual.id;
+					}else if(attributes[i].equals("zindex")){
+						return (T)actual.zindex;
+					}else if(attributes[i].equals("zlayer")){
+						return (T)actual.zlayer;
+					}else{
+						actual = actual.getAttribute(attributes[i]);
+					}
 				}else{
 					return null;/*Ha nullal tér vissza, akkor ez azt jelenti, hogy valamelyik has feltétel false*/
 				}
@@ -43,7 +55,11 @@ public class Operand {
 			}else if(numberValue != null){
 				return (T)numberValue;
 			}else{
-				return (T) className;
+				if(isLeftOperand){
+					return (T) instance;
+				}else{
+					return (T) className;
+				}
 			}
 		}
 	}

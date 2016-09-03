@@ -4,6 +4,9 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import database.queryObject.NumberCompare;
+import database.queryObject.Operators;
+
 public class NumberPrimitiv extends Instance{
 	public Number value;
 	
@@ -25,6 +28,23 @@ public class NumberPrimitiv extends Instance{
 	@Override
 	public <T> T getValue() {
 		return (T) value;
+	}
+	
+	@Override
+	public boolean operate(Number otherOperande, Operators operator) {
+		
+		return NumberCompare.compare(this.value, otherOperande, operator);
+		
+	}
+	
+	@Override
+	public boolean operate(Instance otherOperande, Operators operator) {
+		if(otherOperande instanceof NumberPrimitiv){
+			NumberPrimitiv num = (NumberPrimitiv) otherOperande;
+			
+			NumberCompare.compare(this.value, (Number)num.getValue(), operator);
+		}
+		return false;
 	}
 	
 	public void setAttribute(Number value){

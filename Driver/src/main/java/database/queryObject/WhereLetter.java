@@ -8,27 +8,23 @@ import datastructure.Instance;
 
 public class WhereLetter implements WhereElement{
 	
-	int right;
-	Operators operator;
-	boolean ret;
+	public Operators operator;
 	
-	Instance leftInstanceValue;
-	Boolean leftBoolValue;
-	Number leftNumberValue;
+	public Instance leftInstanceValue;
+	public Boolean leftBoolValue;
+	public Number leftNumberValue;
 	
-	Instance rightInstanceValue;
-	Boolean rightBoolValue;
-	Number rightNumberValue;
+	public Instance rightInstanceValue;
+	public Boolean rightBoolValue;
+	public Number rightNumberValue;
 	
-	String rightOperandClassName;
+	public String leftOperandClassName;
+	public String rightOperandClassName;
 	
 	public Operand leftOperand;
 	public Operand rightOperand;
 	
 	public Instance selectedInstance;
-	
-	int id;
-	
 	
 	public WhereLetter(Operand leftOperand, Operand rightOperand, Operators operator) {
 		this.leftOperand = leftOperand;
@@ -42,66 +38,45 @@ public class WhereLetter implements WhereElement{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public void setSelectedInstance(Instance inst){
-		this.selectedInstance = inst;
-
-		leftInstanceValue = null;
-		leftBoolValue = null;
-		leftNumberValue = null;
-		
-		rightInstanceValue = null;
-		rightBoolValue = null;
-		rightNumberValue = null;
-		
-		if(leftOperand.getOperand(inst) instanceof Boolean){
-			leftBoolValue = leftOperand.getOperand(inst);
-		}else if(leftOperand.getOperand(inst) instanceof Number){
-			leftNumberValue = leftOperand.getOperand(inst);
-		}else if(leftOperand.getOperand(inst) instanceof Instance){
-			leftInstanceValue = leftOperand.getOperand(inst);
-		}
-		
-		if(rightOperand.getOperand(inst) instanceof Boolean){
-			rightBoolValue = rightOperand.getOperand(inst);
-		}else if(rightOperand.getOperand(inst) instanceof Number){
-			rightNumberValue = rightOperand.getOperand(inst);
-		}else if(rightOperand.getOperand(inst) instanceof Instance){
-			rightInstanceValue = rightOperand.getOperand(inst);
-		}
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		return super.clone();
 	}
-	
 	
 	public boolean execute() {
 		/*itt kell kiszámolni*/
 		
-		if(leftInstanceValue != null && rightInstanceValue != null){
-			return leftInstanceValue.operate(rightInstanceValue, operator);
+		if(leftInstanceValue != null){
+			if(rightInstanceValue != null){
+				return leftInstanceValue.operate(rightInstanceValue, operator);
+			}else if(rightBoolValue != null){
+				return leftInstanceValue.operate(rightBoolValue, operator);
+			}else if(rightNumberValue != null){
+				return leftInstanceValue.operate(rightNumberValue, operator);
+			}else if(rightOperandClassName != null){
+				return leftInstanceValue.isOperator(rightOperandClassName);
+			}
+		}else if(leftBoolValue != null){
+			if(rightBoolValue != null){
+				if(operator == Operators.EQ){
+					return rightBoolValue == leftBoolValue;
+				}
+			}else if(rightInstanceValue != null){
+				return rightInstanceValue.operate(leftBoolValue, operator);
+			}
+		}else if(leftNumberValue != null){
+			if(rightNumberValue != null){
+				return NumberCompare.compare(leftNumberValue, rightNumberValue, operator);
+			}else if(rightInstanceValue != null){
+				return NumberCompare.compare(leftNumberValue, (Number)rightInstanceValue.getValue(), operator);
+			}
 		}
+		//throw new NumberFormatException();
 		
+		return false;	
 		
-		return ret;
-		/*if(op == Operators.EQ){
-			return left == right;
-		}else if(op == Operators.GE){
-			return left >= right;
-		}else if(op == Operators.GT){
-			return left > right;
-		}else if(op == Operators.LE){
-			return left <= right;
-		}else if(op == Operators.LT){
-			return left < right;
-		}else if(op == Operators.NE){
-			return left != right;
-		}
-		
-		return false;*/
 	}
 	
-
-	@Override
-	public String toString() {
-		return "" + id;
-	}
 
 	public WhereElement getLeftChild() {
 		return null;
@@ -117,5 +92,41 @@ public class WhereLetter implements WhereElement{
 
 	public void setLeftChild(WhereElement child) {
 		
+	}
+
+
+	
+	public void setCheckInstance(Instance instance) {
+		this.selectedInstance = instance;
+
+		leftInstanceValue = null;
+		leftBoolValue = null;
+		leftNumberValue = null;
+		leftOperandClassName = null;
+		
+		rightInstanceValue = null;
+		rightBoolValue = null;
+		rightNumberValue = null;
+		rightOperandClassName = null;
+		
+		if(leftOperand.getOperand(instance) instanceof Boolean){
+			leftBoolValue = leftOperand.getOperand(instance);
+		}else if(leftOperand.getOperand(instance) instanceof Number){
+			leftNumberValue = leftOperand.getOperand(instance);
+		}else if(leftOperand.getOperand(instance) instanceof Instance){
+			leftInstanceValue = leftOperand.getOperand(instance);
+		}else if(leftOperand.getOperand(instance) instanceof String){
+			leftOperandClassName = leftOperand.getOperand(instance);
+		}
+		
+		if(rightOperand.getOperand(instance) instanceof Boolean){
+			rightBoolValue = rightOperand.getOperand(instance);
+		}else if(rightOperand.getOperand(instance) instanceof Number){
+			rightNumberValue = rightOperand.getOperand(instance);
+		}else if(rightOperand.getOperand(instance) instanceof Instance){
+			rightInstanceValue = rightOperand.getOperand(instance);
+		}else if(rightOperand.getOperand(instance) instanceof String){
+			rightOperandClassName = rightOperand.getOperand(instance);
+		}
 	}
 }

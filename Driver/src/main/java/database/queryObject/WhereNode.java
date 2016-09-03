@@ -1,20 +1,28 @@
 package database.queryObject;
 
-public class WhereNode implements WhereElement{
+import datastructure.Instance;
+
+public class WhereNode implements WhereElement,Cloneable{
 	
-	WhereElement leftChild;
-	WhereElement rightChild;
-	int id;
+	private WhereElement leftChild;
+	private WhereElement rightChild;
 	
-	Operators operator;
+	private Operators operator;
 	
 	public WhereNode parent;
 	/*A gyökérnek nincs szülője*/
 	
 	boolean not = false;/*eza azt jelenti az operátorra nézve, hogy OR Not, azaz van e hozzá not.*/
 	
-	public WhereNode(WhereNode parent) {
-		this.parent = parent;
+	public WhereNode(WhereElement leftChild, WhereElement rightChild) {
+		this.leftChild = leftChild;
+		this.rightChild = rightChild;
+	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO Auto-generated method stub
+		return super.clone();
 	}
 
 	public boolean execute() {
@@ -25,7 +33,6 @@ public class WhereNode implements WhereElement{
 			return (leftChild.execute() && rightChild.execute());
 		}else if(operator == Operators.OR){
 			if(not){
-				System.out.println("asd");
 				return (leftChild.execute() || !rightChild.execute());
 			}
 			return (leftChild.execute() || rightChild.execute());
@@ -50,10 +57,7 @@ public class WhereNode implements WhereElement{
 		return false;
 	}
 	
-	@Override
-	public String toString() {
-		return "" + id;
-	}
+	
 
 	public WhereElement getLeftChild() {
 		return this.leftChild;
@@ -69,5 +73,24 @@ public class WhereNode implements WhereElement{
 
 	public void setLeftChild(WhereElement child) {
 		this.leftChild = child;
+	}
+	
+
+
+	public Operators getOperator() {
+		return operator;
+	}
+
+	public void setOperator(Operators operator) {
+		this.operator = operator;
+	}
+
+	public void setCheckInstance(Instance instance) {
+		
+		/*System.out.println(leftChild);
+		System.out.println(rightChild);
+		leftChild.setCheckInstance(instance);
+		rightChild.setCheckInstance(instance);
+		System.out.println("lefutott");*/
 	}
 }

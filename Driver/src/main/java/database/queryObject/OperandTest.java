@@ -6,7 +6,7 @@ import datastructure.Instance;
 public class OperandTest {
 
 	public static void main(String[] args) {
-		Operand op = new Operand("123");
+		Operand op = new Operand("123",true);
 		InMemoryDatabase db = new InMemoryDatabase("db");
 		
 		for(int i=0;i<db.getMapByName("azeroth").size();i++){

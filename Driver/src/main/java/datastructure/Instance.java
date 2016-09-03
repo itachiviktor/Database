@@ -18,10 +18,10 @@ public class Instance {
 	public String className;
 	/*classname attribútum értékét itt tároljuk*/
 	
-	public int id;
+	public Integer id;
 	
-	public int zindex;
-	public int zlayer;
+	public Integer zindex;
+	public Integer zlayer;
 	
 	public InstanceProviderFromMap provider;
 	
@@ -60,6 +60,11 @@ public class Instance {
 				return true;
 			}
 		}
+		
+		if(attributeName.equals("id") || attributeName.equals("zindex") || attributeName.equals("zlayer")){
+			return true;
+		}
+		
 		return false;
 	}
 	
@@ -118,9 +123,22 @@ public class Instance {
 			
 		}else if(operator == Operators.COLLIDE){
 			
+		}else{
+			/*dobni kell valami exceptiont*/
 		}
 		
+		
 		return true;
+	}
+	
+	public boolean operate(Boolean otherOperande, Operators operator){
+		/*itt az alap definícióban hibát kell dobnia*/
+		return false;
+	}
+	
+	public boolean operate(Number otherOperande, Operators operator){
+		/*itt az alap definícióban hibát kell dobnia*/
+		return false;
 	}
 	
 	public boolean isOperator(String className){
