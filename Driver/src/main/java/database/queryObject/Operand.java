@@ -1,5 +1,7 @@
 package database.queryObject;
 
+import java.util.List;
+
 import datastructure.Instance;
 
 public class Operand {
@@ -9,6 +11,8 @@ public class Operand {
 	public Boolean boolValue;
 	public Number numberValue;
 	public String className;
+	
+	public Select select;
 	
 	public boolean isLeftOperand;
 	
@@ -28,7 +32,19 @@ public class Operand {
 		}
 	}
 	
+	public Operand(Select selectOperand, boolean isLeftOperand) {
+		this.isLeftOperand = isLeftOperand;
+		this.select = selectOperand;
+	}
+	
 	public <T> T getOperand(Instance instance){
+		if(select != null){
+			List<Instance> inst = select.execute();
+			if(inst.size() == 1){
+				return (T)inst.get(0);
+			}
+		}
+		
 		if(attributes != null){
 			Instance actual = instance;
 			boolean act;

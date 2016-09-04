@@ -70,7 +70,7 @@ public class LoadedDatabase {
 		StringPrimitiv szov = maker.makeString("körteee", classes, map);
 	
 		
-		NumberPrimitiv x = maker.makeNumber(12, classes, map);
+		NumberPrimitiv x = maker.makeNumber(5, classes, map);
 
 		
 		NumberPrimitiv y = maker.makeNumber(321, classes, map);

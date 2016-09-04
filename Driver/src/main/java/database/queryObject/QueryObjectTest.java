@@ -14,14 +14,21 @@ public class QueryObjectTest {
 		Postorder order = new Postorder();
 		
 		
-		Select test = new Select(db, "mine");
-		
+		Select select = new Select(db, "mine");
+		From from = new From("azeroth");
 		
 		for(int i=0;i<db.getMap().size();i++){
 			System.out.println(db.getMap().get(i));
 		}
 		
-		Operand op1 = new Operand("mine.zindex",true);
+		
+		
+		
+		
+		
+		
+		
+		/*Operand op1 = new Operand("mine.zindex",true);
 		Operand op2 = new Operand("0",false);
 		Operators oper1 = Operators.EQ;
 		
@@ -54,15 +61,40 @@ public class QueryObjectTest {
 		other.setOperator(Operators.OR);
 		
 		WhereNode rootos = new WhereNode(node, other);
-		rootos.setOperator(Operators.AND);
+		rootos.setOperator(Operators.AND);*/
+		
+		Select sel = new Select(db, "mine");
+		From fr = new From("azeroth");
+		Operand op3 = new Operand("mine.id",true);
+		Operand op4 = new Operand("1",false);
+		Operators oper2 = Operators.EQ;
+		WhereLetter let = new WhereLetter(op3, op4, oper2);
+		
+		Where wh = new Where();
+		wh.setRoot(let);
+		
+		sel.setFrom(fr);
+		sel.setWhere(wh);
+		
+		
+		
+		Operand op1 = new Operand("mine.id",true);
+		Operand op2 = new Operand(sel,false);
+		Operators oper1 = Operators.GT;
+		
+		
+		WhereLetter letter1 = new WhereLetter(op1, op2, oper1);
+		
+		
 		
 		Where where = new Where();
-		where.setRoot(rootos);
+		where.setRoot(letter1);
 		
+		select.setWhere(where);
+		select.setFrom(from);
 		
-		
-		
-		List<Instance> ini = where.execute(db.getMap().getMap());
+		List<Instance> ini = select.execute();
+		//List<Instance> ini = where.execute(db.getMap().getMap());
 		
 		System.out.println();
 		System.out.println();
