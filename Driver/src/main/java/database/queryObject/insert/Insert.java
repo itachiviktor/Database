@@ -69,7 +69,4 @@ public class Insert{
 	public void setDb(InMemoryDatabase db) {
 		this.db = db;
 	}
-	
-	
-	
 }

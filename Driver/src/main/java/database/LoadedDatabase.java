@@ -70,10 +70,12 @@ public class LoadedDatabase {
 		StringPrimitiv szov = maker.makeString("körteee", classes, map);
 	
 		
-		NumberPrimitiv x = maker.makeNumber(5, classes, map);
+		NumberPrimitiv x = maker.makeNumber(-5, classes, map);
 
 		
-		NumberPrimitiv y = maker.makeNumber(321, classes, map);
+		NumberPrimitiv y = maker.makeNumber(3, classes, map);
+		
+		NumberPrimitiv z = maker.makeNumber(-30, classes, map);
 		
 		BooleanPrimitiv bo = maker.makeBoolean(true, classes, map);
 		
@@ -90,8 +92,34 @@ public class LoadedDatabase {
 		
 		map.add(p);
 		
+		Instance pp = new Instance("Point", classes, map);
+		pp.setAttribute("x", y.id);
+		pp.zlayer = 2;
+		pp.zindex = zlayer[pp.zlayer];
+		zlayer[pp.zlayer] += 1;
+
+		pp.setAttribute("y", y.id);
+		pp.id = maker.id;
+		maker.id += 1;
+		
+		
+		map.add(pp);
+		
+		Instance ppp = new Instance("Point", classes, map);
+		ppp.setAttribute("x", z.id);
+		ppp.zlayer = 2;
+		ppp.zindex = zlayer[ppp.zlayer];
+		zlayer[ppp.zlayer] += 1;
+
+		ppp.setAttribute("y", y.id);
+		ppp.id = maker.id;
+		maker.id += 1;
+		
+		
+		map.add(ppp);
+		
 		Instance rect = new Instance("Rectangle", classes, map);
-		rect.setAttribute("location", p.id);
+		rect.setAttribute("location", pp.id);
 		rect.setAttribute("size", p.id);
 		rect.id = maker.id;
 		rect.zlayer = 2;
@@ -126,6 +154,8 @@ public class LoadedDatabase {
 		
 		map.add(miyne);
 		
+		
+		//System.out.println(ston.getAttribute("id"));
 						
 	}
 	

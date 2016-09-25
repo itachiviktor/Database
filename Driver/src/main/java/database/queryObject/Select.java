@@ -1,5 +1,6 @@
 package database.queryObject;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import database.LoadedDatabase;
@@ -7,11 +8,12 @@ import datastructure.Instance;
 import datastructure.TileMap;
 
 public class Select {
-	From from;
-	Where where;
-	OrderBy orderby;
-	List<Instance> result;
-	LoadedDatabase db;
+	public From from;
+	public Where where;
+	public OrderBy orderby;
+	public List<Instance> result;
+	public LoadedDatabase db;
+	public int limit = -1;
 	
 	String selectObject;
 	String[] selectAttributes;/*selectattributes[0] az mindig classname.*/
@@ -71,6 +73,32 @@ public class Select {
 
 
 	public List<Instance> execute(){
-		return where.execute(from.execute(db));
+		if(limit > -1){
+			/*Ha nincs limit a lekérdezésben, akkor az alapértelmezett értéke -1.*/
+			List<Instance> executed = orderby.execute(where.execute(from.execute(db)));
+			List<Instance> result = new ArrayList<Instance>();
+			/*Itt az a lényeg, hogy csak annyi elemet rakunk bele a lekérdezés eredményébe,
+			 amennyit a limit megenged.*/
+			for(int i=0;i<executed.size();i++){
+				if(i < limit){
+					result.add(executed.get(i));
+				}
+			}
+			return result;
+		}
+		
+		return orderby.execute(where.execute(from.execute(db)));
 	}
+
+
+	public int getLimit() {
+		return limit;
+	}
+
+
+	public void setLimit(int limit) {
+		this.limit = limit;
+	}
+	
+	
 }

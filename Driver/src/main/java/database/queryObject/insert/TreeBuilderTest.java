@@ -82,7 +82,7 @@ public class TreeBuilderTest {
 		
 		
 		/*itt már ténylegesen lekérdezve van az attribútum*/
-		System.out.println(db.getMapByName("azeroth").get(16).getAttribute("stone").getAttribute("location").getAttribute("y").getValue());
+		//System.out.println(db.getMapByName("azeroth").get(16).getAttribute("stone").getAttribute("location").getAttribute("y").getValue());
 		
 
 	}

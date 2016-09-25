@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import database.queryObject.Operators;
 import driver.Result;
 
-public class Instance {
+public class Instance implements Comparable<Instance>{
 	public ClassDefinition classType;
 	/*Ez tartalmazni fogly az összes, attribútumát ennek a példányak, azaz az osztályleíró.*/
 	
@@ -149,6 +149,21 @@ public class Instance {
 		}
 	}
 	
+	public Number distanceFrom(double a, double b){
+		double returnValue;
+		if(attributes.containsKey("x") && attributes.containsKey("y")){
+			Integer x = (Integer)getAttribute("x").getValue();
+			Integer y = (Integer)getAttribute("y").getValue();
+			double doublex = x.doubleValue();
+			double doubley = y.doubleValue();
+			returnValue = Math.sqrt( ((doublex - a) * (doublex - a)) + ( (doubley - b) * (doubley - b)) );
+		}else{
+			returnValue = -1;
+		}
+		//System.out.println(returnValue);
+		return returnValue;
+	}
+	
 	
 	@Override
 	public String toString() {
@@ -162,6 +177,12 @@ public class Instance {
 		}
 		
 		return sb.toString();
+	}
+
+	public int compareTo(Instance o) {
+		System.out.println("asd");
+		
+		return 0;
 	}
 	
 }

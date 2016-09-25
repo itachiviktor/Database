@@ -23,11 +23,6 @@ public class QueryObjectTest {
 		
 		
 		
-		
-		
-		
-		
-		
 		/*Operand op1 = new Operand("mine.zindex",true);
 		Operand op2 = new Operand("0",false);
 		Operators oper1 = Operators.EQ;
@@ -66,17 +61,30 @@ public class QueryObjectTest {
 		Select sel = new Select(db, "mine");
 		From fr = new From("azeroth");
 		Operand op3 = new Operand("mine.id",true);
-		Operand op4 = new Operand("1",false);
-		Operators oper2 = Operators.EQ;
-		WhereLetter let = new WhereLetter(op3, op4, oper2);
+		Operand op4 = new Operand("-1000",false);
+		Operators oper2 = Operators.GT;
+		WhereLetter let1 = new WhereLetter(op3, op4, oper2);
+		
+		/*metódus where után csak a distancefrom lehet, és így adhatjuk meg.*/
+		/*mine.location.distanceFrom()*/
+		/*mine.distanceFrom()*/
+		Operand op5 = new Operand("mine.location",true);
+		op5.setMethodParameters(4.0, -2.0);
+		Operand op6 = new Operand("10",false);
+		Operators oper3 = Operators.GT;
+		WhereLetter let2 = new WhereLetter(op5, op6, oper3);
+		
+		WhereNode root = new WhereNode(let1, let2);
+		root.setOperator(Operators.OR);
 		
 		Where wh = new Where();
-		wh.setRoot(let);
+		wh.setRoot(let1);
+		OrderBy by = new OrderBy("mine.id", OrderBySort.DESC);
 		
 		sel.setFrom(fr);
 		sel.setWhere(wh);
-		
-		
+		//sel.setLimit(1);
+		sel.setOrderby(by);
 		
 		Operand op1 = new Operand("mine.id",true);
 		Operand op2 = new Operand(sel,false);
@@ -85,6 +93,12 @@ public class QueryObjectTest {
 		
 		WhereLetter letter1 = new WhereLetter(op1, op2, oper1);
 		
+		Operand op10 = new Operand("mine.x",true);
+		Operand op20 = new Operand("-1000",false);
+		Operators oper10 = Operators.GT;
+		
+		
+		WhereLetter letter10 = new WhereLetter(op10, op20, oper10);
 		
 		
 		Where where = new Where();
@@ -93,7 +107,7 @@ public class QueryObjectTest {
 		select.setWhere(where);
 		select.setFrom(from);
 		
-		List<Instance> ini = select.execute();
+		List<Instance> ini = sel.execute();
 		//List<Instance> ini = where.execute(db.getMap().getMap());
 		
 		System.out.println();
