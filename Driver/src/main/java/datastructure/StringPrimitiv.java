@@ -28,6 +28,13 @@ public class StringPrimitiv extends Instance implements Comparable<Instance>{
 		return (T) value;
 	}
 	
+	@Override
+	public <T> void setValue(T value) {
+		if(value instanceof String){
+			this.value = (String)value;
+		}
+	}
+	
 	public void setAttribute(String value){
 		this.value = value;
 	}

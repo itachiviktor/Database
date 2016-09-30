@@ -1,27 +1,36 @@
-package database.queryObject.insert;
+package database.queryObject.update;
 
 import java.util.List;
 
 import database.InMemoryDatabase;
+import database.queryObject.Operand;
+import database.queryObject.Operators;
+import database.queryObject.Where;
+import database.queryObject.WhereLetter;
 import database.queryObject.create.AttributeDescriptor;
 import database.queryObject.create.Class;
 import database.queryObject.create.Create;
-import database.queryObject.create.Database;
-import database.queryObject.create.Map;
-import datastructure.ClassDefinition;
+import database.queryObject.insert.TreeBuilder;
+import database.queryObject.insert.TreeNode;
+import database.queryObject.insert.Values;
+import datastructure.Instance;
 import datastructure.InstanceMaker;
+import datastructure.TileMap;
 
-public class TreeBuilderTest {
+public class UpdateTest {
 
 	public static void main(String[] args) {
 		InMemoryDatabase db = new InMemoryDatabase("db");
+		TileMap map = db.getMapByName("azeroth");
+
 		
-		List<ClassDefinition> classes = db.getClasses();
+		
+		
 		
 		InstanceMaker maker = db.getMapByName("azeroth").getMaker();
 		
 		TreeBuilder builder = new TreeBuilder(db, maker);
-	
+		
 		/*for(int i=0;i<classes.size();i++){
 			System.out.println(classes.get(i));
 		}*/
@@ -76,15 +85,40 @@ public class TreeBuilderTest {
 		v.execute();
 		
 		
-		for(int i=0;i<db.getMapByName("azeroth").size();i++){
-			System.out.println(db.getMapByName("azeroth").get(i));
+		
+		
+		
+		
+		
+		/*System.out.println(map.get(7).getAttribute("stone").getAttribute("location").getAttribute("x").getValue());
+		map.get(7).getAttribute("stone").getAttribute("location").getAttribute("x").setValue(20);
+		System.out.println(map.get(7).getAttribute("stone").getAttribute("location").getAttribute("x").getValue());
+		*/
+		
+		Update update = new Update("azeroth", db);
+		
+		Set set = new Set();
+		set.setAttribute("location.x");
+		set.setValue(30);
+		
+		Operand op3 = new Operand("mine.id",true);
+		Operand op4 = new Operand("-1000",false);
+		Operators oper2 = Operators.GT;
+		WhereLetter let1 = new WhereLetter(op3, op4, oper2);
+		
+		Where wh = new Where();
+		wh.setRoot(let1);
+		
+		update.db = db;
+		update.set = set;
+		update.where = wh;
+		
+		List<Instance> res = update.execute();
+		
+		System.out.println();
+		System.out.println();
+		for(int i=0;i<map.size();i++){
+			System.out.println(map.get(i));
 		}
-		
-		
-		/*itt már ténylegesen lekérdezve van az attribútum*/
-		//System.out.println(db.getMapByName("azeroth").get(16).getAttribute("stone").getAttribute("location").getAttribute("y").getValue());
-		
-
 	}
-
 }

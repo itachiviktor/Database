@@ -29,10 +29,13 @@ public class TreeNode {
 	
 	public InstanceMaker maker;
 	
-	public TreeNode(InMemoryDatabase db,  InstanceMaker maker, String className) {
+	public String insertedMapName;/*Tudnia kell a nodenak, hogy melyik mapre fog beszúrni.*/
+	
+	public TreeNode(InMemoryDatabase db,  InstanceMaker maker, String className, String insertedMapName) {
 		this.db = db;
 		this.maker = maker;
 		this.className = className;
+		this.insertedMapName = insertedMapName;
 		init(db.getClasses());
 	}
 	
@@ -40,6 +43,7 @@ public class TreeNode {
 		this.parent = parent;
 		this.attributeName = attributeName;
 		this.db = db;
+		this.insertedMapName = parent.insertedMapName;
 		this.maker = maker;
 		init(db.getClasses());
 	}
@@ -156,7 +160,7 @@ public class TreeNode {
 	}
 	
 	public Values getValue(){
-		Values value = new Values("azeroth", db,  maker);
+		Values value = new Values(insertedMapName, db,  maker);
 		value.className = this.className;
 		value.ownClass = this.nodeClassDefinition;
 		

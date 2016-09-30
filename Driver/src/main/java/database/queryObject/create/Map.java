@@ -22,5 +22,7 @@ public class Map implements Executable{
 		map.setMapName(name);
 		
 		memory.getMaps().add(map);
+		
+		memory.persist();
 	}
 }

@@ -48,10 +48,8 @@ public class Values{
 		
 		this.classes = db.getClasses();
 		
-		
-		
 		this.instances = db.getMapByName(mapName);
-		//this.instances = db.getMaps().get(mapName);
+		
 		this.maker = maker;
 
 		this.mapName = mapName;
@@ -63,6 +61,7 @@ public class Values{
 		
 		
 		if(stringPrimitive != null){
+
 			StringPrimitiv prim = maker.makeString(this.stringPrimitive, classes, instances); 
 			return prim.id;
 		}else if(numberPrimitive != null){

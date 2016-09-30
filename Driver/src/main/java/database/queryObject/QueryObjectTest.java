@@ -83,7 +83,7 @@ public class QueryObjectTest {
 		
 		sel.setFrom(fr);
 		sel.setWhere(wh);
-		//sel.setLimit(1);
+		sel.setLimit(1);
 		sel.setOrderby(by);
 		
 		Operand op1 = new Operand("mine.id",true);

@@ -21,8 +21,8 @@ public class TreeBuilder {
 		this.maker = maker;
 	}
 	
-	public void makeRoot(String className){
-		root = new TreeNode(db, maker, className);
+	public void makeRoot(String className, String insertedMapName){
+		root = new TreeNode(db, maker, className, insertedMapName);
 		
 		actualNode = root;
 	}

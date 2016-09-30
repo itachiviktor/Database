@@ -31,6 +31,13 @@ public class NumberPrimitiv extends Instance implements Comparable<Instance>{
 	}
 	
 	@Override
+	public <T> void setValue(T value) {
+		if(value instanceof Number){
+			this.value = (Number)value;
+		}
+	}
+	
+	@Override
 	public boolean operate(Number otherOperande, Operators operator) {
 		
 		return NumberCompare.compare(this.value, otherOperande, operator);

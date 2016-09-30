@@ -23,6 +23,7 @@ public class InstanceMaker {
 		szov.zlayer = 0;
 		
 		id += 1;
+
 		map.add(szov);
 		
 		return szov;

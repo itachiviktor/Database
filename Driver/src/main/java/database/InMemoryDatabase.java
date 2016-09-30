@@ -1,6 +1,9 @@
 package database;
 
+import java.io.BufferedWriter;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,9 +30,13 @@ public class InMemoryDatabase {
 	
 	private List<ClassDefinition> classes;
 	
+	private String databaseName;
+	
+	
 	public InMemoryDatabase(String databaseName) {
 		//maps = new HashMap<String, List<Instance>>();
 		maps = new ArrayList<TileMap>();
+		this.databaseName = databaseName;
 		
 		FileInputStream in = null;
 		try{
@@ -64,7 +71,7 @@ public class InMemoryDatabase {
 	
 	private void getInstances(JSONObject database){
 		
-		JSONArray dbelements = database.getJSONArray("firstdatabase");
+		JSONArray dbelements = database.getJSONArray(databaseName);
 		
 		for(int j=0;j<dbelements.length();j++){
 			JSONObject mapp = dbelements.getJSONObject(j);
@@ -186,7 +193,59 @@ public class InMemoryDatabase {
 		this.maps = maps;
 	}
 	
-	
-	
+	/**
+	 * This method writes the memory content to the JSON file.
+	 * */
+	public void persist(){
+		BufferedWriter out = null;
+		try{
+			out = new BufferedWriter(new FileWriter(databaseName + ".json"));
+			
+			JSONArray classesarray = new JSONArray();
+			
+			for(ClassDefinition dzs : classes){
+				JSONObject ob = new JSONObject();
+				ob.put(dzs.className, dzs.getJSONrepresentation());
+				classesarray.put(ob);
+			}
+			
+			JSONObject cls = new JSONObject();
+			cls.put("classes", classesarray);
+			
+			JSONArray persistentmaps = new JSONArray();
+			persistentmaps.put(cls);
+			
+			
+			for(int i=0;i<maps.size();i++){
+				JSONArray instancearray = new JSONArray();
+				for(Instance inst : maps.get(i).getMap()){
+					JSONObject ob = new JSONObject();
+					ob.put(String.valueOf(inst.id),inst.getJSONRepresentation());
+					instancearray.put(ob);
+				}
+				JSONObject obj = new JSONObject();
+				obj.put(maps.get(i).getMapName(), instancearray);
+				persistentmaps.put(obj);
+				
+			}
+			
+			JSONObject dbname = new JSONObject();
+			
+			dbname.put(databaseName, persistentmaps);
+			
+			out.write(dbname.toString());
+			
+		}catch (IOException e) {
+			
+		}finally{
+			try{
+				if(out != null){
+					out.close();
+				}
+			}catch (IOException e) {
+				
+			}
+		}
+	}
 	
 }

@@ -29,6 +29,13 @@ public class BooleanPrimitiv extends Instance{
 	}
 	
 	@Override
+	public <T> void setValue(T value) {
+		if(value instanceof Boolean){
+			this.value = (Boolean)value;
+		}
+	}
+	
+	@Override
 	public boolean operate(Instance otherOperande, Operators operator) {
 		if(otherOperande instanceof BooleanPrimitiv){
 			if(operator == Operators.EQ){

@@ -118,6 +118,10 @@ public class Instance implements Comparable<Instance>{
 		return null;
 	}
 	
+	public <T> void setValue(T value){
+		
+	}
+	
 	public boolean operate(Instance otherOperande, Operators operator){
 		if(operator == Operators.CLOSEST){
 			
