@@ -1,5 +1,13 @@
 package database.queryObject.update;
 
-public class Move {
+import java.util.List;
 
+import datastructure.Instance;
+
+public class Move {
+	
+	public List<Instance> execute(){
+		
+		return null;
+	}
 }

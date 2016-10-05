@@ -3,6 +3,7 @@ package database.queryObject;
 import java.util.ArrayList;
 import java.util.List;
 
+import database.InMemoryDatabase;
 import database.LoadedDatabase;
 import datastructure.Instance;
 import datastructure.TileMap;
@@ -12,13 +13,13 @@ public class Select {
 	public Where where;
 	public OrderBy orderby;
 	public List<Instance> result;
-	public LoadedDatabase db;
+	public InMemoryDatabase db;
 	public int limit = -1;
 	
 	String selectObject;
 	String[] selectAttributes;/*selectattributes[0] az mindig classname.*/
 	
-	public Select(LoadedDatabase db, String selectObject) {
+	public Select(InMemoryDatabase db, String selectObject) {
 		this.db = db;
 		
 		this.selectObject = selectObject;

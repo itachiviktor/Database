@@ -3,13 +3,15 @@ package database.queryObject;
 import java.util.List;
 import java.util.Stack;
 
+import database.InMemoryDatabase;
 import database.LoadedDatabase;
 import datastructure.Instance;
 import datastructure.TileMap;
 
 public class QueryObjectTest {
 	public static void main(String[] args) {
-		LoadedDatabase db = new LoadedDatabase();
+		InMemoryDatabase db = new InMemoryDatabase("db");
+		TileMap map = db.getMapByName("azeroth");
 		
 		Postorder order = new Postorder();
 		
@@ -17,8 +19,8 @@ public class QueryObjectTest {
 		Select select = new Select(db, "mine");
 		From from = new From("azeroth");
 		
-		for(int i=0;i<db.getMap().size();i++){
-			System.out.println(db.getMap().get(i));
+		for(int i=0;i<db.getMapByName("azeroth").size();i++){
+			System.out.println(db.getMapByName("azeroth").get(i));
 		}
 		
 		

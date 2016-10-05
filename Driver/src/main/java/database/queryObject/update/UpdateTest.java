@@ -24,9 +24,6 @@ public class UpdateTest {
 		TileMap map = db.getMapByName("azeroth");
 
 		
-		
-		
-		
 		InstanceMaker maker = db.getMapByName("azeroth").getMaker();
 		
 		TreeBuilder builder = new TreeBuilder(db, maker);

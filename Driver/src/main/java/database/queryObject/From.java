@@ -2,6 +2,7 @@ package database.queryObject;
 
 import java.util.List;
 
+import database.InMemoryDatabase;
 import database.LoadedDatabase;
 import datastructure.Instance;
 import datastructure.TileMap;
@@ -15,10 +16,10 @@ public class From {
 		this.map = map;
 	}
 	
-	public List<Instance> execute(LoadedDatabase db){
+	public List<Instance> execute(InMemoryDatabase db){
 		if(select != null){
 			return select.execute();
 		}
-		return db.getMap().getMap();
+		return db.getMapByName(map).getMap();
 	}
 }

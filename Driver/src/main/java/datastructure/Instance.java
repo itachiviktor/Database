@@ -3,11 +3,8 @@ package datastructure;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.json.JSONObject;
-
 import database.queryObject.Operators;
-import driver.Result;
 
 public class Instance implements Comparable<Instance>{
 	public ClassDefinition classType;
@@ -187,6 +184,87 @@ public class Instance implements Comparable<Instance>{
 		System.out.println("asd");
 		
 		return 0;
+	}
+	
+	public void delete(List<Instance> map){
+		boolean isItDeletable = true; /*ez a változó azt tárolja, hogy törölhető-e az elem, azaz senki nem hivatkozik rá
+		csak a szőlöje, aki továbbhívta ezt a metódust.*/
+		
+		for(int i=0;i<map.size();i++){
+			if(map.get(i).hasThisChild(this.id)){
+				isItDeletable = false;
+			}
+		}
+		
+		/*csak akkor törlöm az elemet, és annak gyerekeit, ha senki sem mutat rá*/
+		if(isItDeletable){
+			for(String x : attributes.keySet()){
+				int childId = attributes.get(x);
+				
+				for(int i=0;i<map.size();i++){
+					if(map.get(i).id == childId){
+						map.get(i).delete(map, this.id);
+					}
+				}
+			}
+			
+			/*Itt saját magát törli ki.*/
+			for(int i=0;i<map.size();i++){
+				if(map.get(i).id == this.id){
+					map.remove(i);
+				}
+			}
+		}
+	}
+	
+	/**
+	 * This method gives that has this object tha parameter id child.
+	 * Az a lényeg, hogy a paraméterben kapott id-jű gyereke van-e ennek az attribútumban.
+	 * @param id
+	 * @return
+	 */
+	public boolean hasThisChild(int id){
+		for(String x : attributes.keySet()){
+			if(attributes.get(x) == id){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public void delete(List<Instance> map, int parentId){
+		boolean isItDeletable = true; /*ez a változó azt tárolja, hogy törölhető-e az elem, azaz senki nem hivatkozik rá
+		csak a szőlöje, aki továbbhívta ezt a metódust.*/
+		
+		for(int i=0;i<map.size();i++){
+			if(map.get(i).hasThisChild(this.id) && map.get(i).id != parentId){
+				isItDeletable = false;
+				break;
+			}
+		}
+		
+		/*csak akkor törlöm az elemet, és annak gyerekeit, ha senki sem mutat rá*/
+		if(isItDeletable){
+			
+			/*itt a gyerekeknek szólok, ha ő rájuk sem hivatkozik senki, akkor töröljék magukat.*/
+			for(String x : attributes.keySet()){
+				int childId = attributes.get(x);
+				
+				for(int i=0;i<map.size();i++){
+					if(map.get(i).id == childId){
+						map.get(i).delete(map, this.id);
+					}
+				}
+			}
+			
+			/*Itt saját magát törli ki.*/
+			for(int i=0;i<map.size();i++){
+				if(map.get(i).id == this.id){
+					map.remove(i);
+				}
+			}
+			
+		}
 	}
 	
 }
