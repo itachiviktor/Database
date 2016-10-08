@@ -10,6 +10,10 @@ public class CreateTest {
 		
 		InMemoryDatabase asd = new InMemoryDatabase("db");
 		
+		for(int i=0;i<asd.getClasses().size();i++){
+			System.out.println(asd.getClasses().get(i));
+		}
+		
 		Create create = new Create();
 		
 		Database d = new Database("almakorteszilva");

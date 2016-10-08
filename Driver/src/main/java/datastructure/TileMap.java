@@ -47,6 +47,22 @@ public class TileMap {
 		return map.get(index);
 	}
 	
+	/**
+	 * This method returns with an instance, which contains this id in the attribute.
+	 * @param id
+	 * @return
+	 */
+	public Instance getByIdValue(int id){
+		Instance result = null;
+		for(int i=0;i<map.size();i++){
+			if(map.get(i).id == id){
+				result = map.get(i);
+				break;
+			}
+		}
+		return result;
+	}
+	
 	public boolean isEmpty(){
 		return map.isEmpty();
 	}
@@ -59,8 +75,6 @@ public class TileMap {
 		map.addAll(c);
 	}
 	
-	
-
 
 	public List<Instance> getMap() {
 		return map;
@@ -90,7 +104,5 @@ public class TileMap {
 	public void setMapName(String mapName) {
 		this.mapName = mapName;
 	}
-	
-	
-	
+		
 }

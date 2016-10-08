@@ -87,8 +87,13 @@ public class Select {
 			}
 			return result;
 		}
+		if(orderby != null){
+			return orderby.execute(where.execute(from.execute(db)));
+		}else{
+			return where.execute(from.execute(db));
+		}
 		
-		return orderby.execute(where.execute(from.execute(db)));
+		
 	}
 
 

@@ -29,7 +29,7 @@ public class Delete {
 					database.get(i).delete(database);
 					
 					/*Itt jön az, hogyha törlés volt, akkor az indexeket a lyukas helyekre kell betolni.*/
-					for(int k=0;k<database.size();k++){
+					/*for(int k=0;k<database.size();k++){
 						if(database.get(k).id != k){//Ha az idje nem egyenlő az indexével a listában
 							for(int l=0;l<database.size();l++){
 								for(String x : database.get(l).attributes.keySet()){
@@ -40,7 +40,7 @@ public class Delete {
 							}
 							database.get(k).id = k;
 						}
-					}
+					}*/
 				}
 			}
 		}

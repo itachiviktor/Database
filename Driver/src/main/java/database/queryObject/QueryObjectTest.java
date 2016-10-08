@@ -62,9 +62,9 @@ public class QueryObjectTest {
 		
 		Select sel = new Select(db, "mine");
 		From fr = new From("azeroth");
-		Operand op3 = new Operand("mine.id",true);
-		Operand op4 = new Operand("-1000",false);
-		Operators oper2 = Operators.GT;
+		Operand op3 = new Operand("mine",true);
+		Operand op4 = new Operand("Entity",false);
+		Operators oper2 = Operators.IS;
 		WhereLetter let1 = new WhereLetter(op3, op4, oper2);
 		
 		/*metódus where után csak a distancefrom lehet, és így adhatjuk meg.*/
@@ -85,8 +85,8 @@ public class QueryObjectTest {
 		
 		sel.setFrom(fr);
 		sel.setWhere(wh);
-		sel.setLimit(1);
-		sel.setOrderby(by);
+		//sel.setLimit(1);
+		//sel.setOrderby(by);
 		
 		Operand op1 = new Operand("mine.id",true);
 		Operand op2 = new Operand(sel,false);

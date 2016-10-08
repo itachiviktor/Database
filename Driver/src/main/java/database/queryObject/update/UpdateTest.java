@@ -98,6 +98,7 @@ public class UpdateTest {
 		set.setAttribute("location.x");
 		set.setValue(30);
 		
+		/*updatenél nincs mine.id csak id , majd a mine. -ot manuálisan kell odaraknom a buildelőben.*/
 		Operand op3 = new Operand("mine.id",true);
 		Operand op4 = new Operand("-1000",false);
 		Operators oper2 = Operators.GT;

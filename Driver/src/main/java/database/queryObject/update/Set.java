@@ -88,7 +88,6 @@ public class Set {
 			}
 		}
 		
-		
 		/*Itt kellene a módosításokat kivitelezni.*/
 		return null;
 	}

@@ -1,9 +1,7 @@
 package database.queryObject.delete;
 
 import java.util.List;
-
 import database.InMemoryDatabase;
-import database.LoadedDatabase;
 import database.queryObject.From;
 import database.queryObject.Operand;
 import database.queryObject.Operators;
@@ -94,6 +92,8 @@ public class DeleteTest {
 		for(int i=0;i<db.getMapByName("azeroth").size();i++){
 			System.out.println(db.getMapByName("azeroth").get(i));
 		}
+		
+		System.out.println("0. elem: " + db.getMapByName("azeroth").get(0));
 	}
 
 }
