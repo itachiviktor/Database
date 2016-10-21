@@ -2,9 +2,7 @@ package database.queryObject.insert;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import database.InMemoryDatabase;
-import database.queryObject.create.Executable;
 import datastructure.BooleanPrimitiv;
 import datastructure.ClassDefinition;
 import datastructure.Instance;
@@ -55,7 +53,7 @@ public class Values{
 		this.mapName = mapName;
 	}
 	
-	public int execute(){
+	public int execute(int zlayer){
 		/*Itt először feltöltjük a default értékeket.*/
 		
 		
@@ -74,7 +72,7 @@ public class Values{
 			Instance inst = new Instance(className, classes, instances);
 			for(int i=0;i<children.size();i++){
 				
-				values.add(children.get(i).execute());
+				values.add(children.get(i).execute(zlayer));
 				/*Itt még össze kell rakni egy Instancet és hozzáadni a listához, majd az idjével visszatérni.*/
 				
 				inst.setAttribute(this.childAttributeNames.get(i), values.get(i));
@@ -105,8 +103,8 @@ public class Values{
 			
 			inst.id = maker.id;
 			maker.id += 1;
-			inst.zlayer = 88;/*Ez a LAYERtől függ*/
-			inst.zindex = maker.zlayer[inst.zlayer];
+			inst.zlayer = zlayer;/*Ez a LAYERtől függ*/
+			inst.zindex = maker.zlayer[inst.zlayer] + 1;
 			maker.zlayer[inst.zlayer] += 1;
 			
 			instances.add(inst);

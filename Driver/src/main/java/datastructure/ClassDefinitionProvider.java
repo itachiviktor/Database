@@ -19,6 +19,7 @@ public class ClassDefinitionProvider {
 	private ClassDefinition rectangle;
 	private ClassDefinition position;
 	private ClassDefinition node;
+	private ClassDefinition entity;
 	
 	public ClassDefinitionProvider(List<ClassDefinition> classes, List<TileMap> maps) {		
 		string = new ClassDefinition("String", maps, classes);
@@ -52,6 +53,12 @@ public class ClassDefinitionProvider {
 		node.getAttributes().put("next", "Node");
 		node.getAttributes().put("isFirst", "Boolean");
 		
+		entity = new ClassDefinition("Entity", maps, classes);
+		entity.getAttributes().put("x", "Number");
+		entity.getAttributes().put("y", "Number");
+		entity.getAttributes().put("width", "Number");
+		entity.getAttributes().put("height", "Number");
+		entity.getAttributes().put("image", "String");
 		
 		classes.add(string);
 		classes.add(number);
@@ -62,6 +69,7 @@ public class ClassDefinitionProvider {
 		classes.add(rectangle);
 		classes.add(position);
 		classes.add(node);
+		classes.add(entity);
 	}
 	
 	/**

@@ -63,7 +63,7 @@ public class QueryObjectTest {
 		Select sel = new Select(db, "mine");
 		From fr = new From("azeroth");
 		Operand op3 = new Operand("mine",true);
-		Operand op4 = new Operand("Entity",false);
+		Operand op4 = new Operand("körteee",false);
 		Operators oper2 = Operators.IS;
 		WhereLetter let1 = new WhereLetter(op3, op4, oper2);
 		

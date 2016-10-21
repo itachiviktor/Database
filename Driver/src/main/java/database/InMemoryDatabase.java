@@ -1,20 +1,16 @@
 package database;
 
 import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
-
 import datastructure.BooleanPrimitiv;
 import datastructure.ClassDefinition;
 import datastructure.Instance;
@@ -34,6 +30,7 @@ public class InMemoryDatabase {
 	
 	
 	public InMemoryDatabase(String databaseName) {
+		/*Ez a konstruktor, amikor a projektben lévő adatbázis JSON-öket kezeljük, ez persze a ritkább*/
 		//maps = new HashMap<String, List<Instance>>();
 		maps = new ArrayList<TileMap>();
 		this.databaseName = databaseName;
@@ -41,6 +38,31 @@ public class InMemoryDatabase {
 		FileInputStream in = null;
 		try{
 			in = new FileInputStream(databaseName + ".json");
+			JSONTokener tokener = new JSONTokener(in);
+			JSONObject root = new JSONObject(tokener);
+			
+			getInstances(root);
+			
+		}catch (IOException e) {
+			
+		}finally{
+			try{
+				if(in != null){
+					in.close();
+				}
+			}catch (IOException e) {
+				
+			}
+		}
+	}
+	
+	public InMemoryDatabase(File fileLocation) {
+		maps = new ArrayList<TileMap>();
+		this.databaseName = fileLocation.getName().split("\\.")[0];
+		
+		FileInputStream in = null;
+		try{
+			in = new FileInputStream(fileLocation.getAbsolutePath());
 			JSONTokener tokener = new JSONTokener(in);
 			JSONObject root = new JSONObject(tokener);
 			

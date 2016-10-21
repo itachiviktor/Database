@@ -1,5 +1,6 @@
 package database;
 
+import java.io.File;
 import java.util.List;
 
 import database.queryObject.create.AttributeDescriptor;
@@ -17,6 +18,7 @@ import datastructure.TileMap;
 public class Fut {
 
 	public static void main(String[] args) {
+		
 		InMemoryDatabase db = new InMemoryDatabase("db");
 		//TileMap map = db.getMapByName("azeroth");
 		

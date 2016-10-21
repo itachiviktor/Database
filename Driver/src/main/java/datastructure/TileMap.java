@@ -87,6 +87,8 @@ public class TileMap {
 
 
 	public InstanceMaker getMaker() {
+		maker.refreshLayerTable(map);
+		
 		return maker;
 	}
 

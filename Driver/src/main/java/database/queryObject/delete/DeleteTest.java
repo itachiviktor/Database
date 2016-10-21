@@ -51,7 +51,7 @@ public class DeleteTest {
 		/*innentől van meg.*/
 		
 		Values value = builder.root.getValue();
-		value.execute();
+		value.execute(0);
 		
 		
 		

@@ -38,10 +38,6 @@ public class WhereLetter implements WhereElement{
 		// TODO Auto-generated constructor stub
 	}
 	
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		return super.clone();
-	}
 	
 	public boolean execute() {
 		/*itt kell kiszámolni*/

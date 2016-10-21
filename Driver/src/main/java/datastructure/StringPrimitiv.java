@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import database.queryObject.Operators;
+
 public class StringPrimitiv extends Instance implements Comparable<Instance>{
 	public String value;
 	
@@ -34,6 +36,12 @@ public class StringPrimitiv extends Instance implements Comparable<Instance>{
 			this.value = (String)value;
 		}
 	}
+	
+	@Override
+	public boolean isOperator(String className) {
+		return value.equals(className);
+	}
+	
 	
 	public void setAttribute(String value){
 		this.value = value;

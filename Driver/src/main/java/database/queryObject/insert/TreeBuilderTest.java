@@ -70,10 +70,10 @@ public class TreeBuilderTest {
 		}*/
 		
 		Values value = builder.root.getValue();
-		value.execute();
+		value.execute(0);
 		
 		Values v = masik.root.getValue();
-		v.execute();
+		v.execute(0);
 		
 		
 		for(int i=0;i<db.getMapByName("azeroth").size();i++){

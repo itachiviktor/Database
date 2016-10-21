@@ -1,6 +1,9 @@
 package datastructure;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 
 public class InstanceMaker {
 	public int id;
@@ -11,6 +14,31 @@ public class InstanceMaker {
 		indexet, amit kilehet osztani.*/
 		for(int i=0;i<zlayer.length;i++){
 			zlayer[i] = 0;
+		}
+	}
+	
+	public void refreshLayerTable(List<Instance> map){
+		Map<Integer, Integer> layers = new HashMap<Integer, Integer>();
+		
+		for(int i=0;i<map.size();i++){
+			if(layers.containsKey(map.get(i).zlayer)){
+				/*ha van már ilyen layerú elem felvéve*/
+				
+				if(layers.get(map.get(i).zlayer) < map.get(i).zindex ){
+					layers.replace(map.get(i).zlayer, map.get(i).zindex);
+				}
+			}else{
+				/*ha még nincs benne, akkor beletesszük.*/
+				layers.put(map.get(i).zlayer, map.get(i).zindex);
+			}
+		}
+		
+		for(int i=0;i<zlayer.length;i++){
+			if(layers.containsKey(i)){
+				zlayer[i] = layers.get(i);
+			}else{
+				zlayer[i] = 0;
+			}
 		}
 	}
 	

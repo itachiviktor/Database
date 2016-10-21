@@ -84,7 +84,7 @@ public class CreateDatabseTest {
 		value.execute();*/
 		
 		Values v = masik.root.getValue();
-		v.execute();
+		v.execute(0);
 		
 		
 		db.persist();

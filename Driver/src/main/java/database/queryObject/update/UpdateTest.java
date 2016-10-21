@@ -76,10 +76,10 @@ public class UpdateTest {
 		}*/
 		
 		Values value = builder.root.getValue();
-		value.execute();
+		value.execute(0);
 		
 		Values v = masik.root.getValue();
-		v.execute();
+		v.execute(0);
 		
 		
 		
@@ -97,6 +97,8 @@ public class UpdateTest {
 		Set set = new Set();
 		set.setAttribute("location.x");
 		set.setValue(30);
+		set.setAttribute("location.y");
+		set.setValue(333);
 		
 		/*updatenél nincs mine.id csak id , majd a mine. -ot manuálisan kell odaraknom a buildelőben.*/
 		Operand op3 = new Operand("mine.id",true);

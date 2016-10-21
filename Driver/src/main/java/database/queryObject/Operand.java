@@ -10,6 +10,7 @@ public class Operand {
 	public String[] attributes;
 	public Boolean boolValue;
 	public Number numberValue;
+	public String stringValue;
 	public String className;/*Mine,Stone,Line*/
 	
 	public Select select;
@@ -32,6 +33,7 @@ public class Operand {
 			}else if(longOperand.matches("[0-9]+") || longOperand.matches("-[0-9]+")){
 				numberValue = Integer.parseInt(longOperand);
 			}else{
+				stringValue = longOperand;
 				className = longOperand;
 			}
 		}
@@ -168,7 +170,9 @@ public class Operand {
 			}else if(numberValue != null){
 				return (T)numberValue;
 			}else{
+				/*StringValue != null*/
 				if(isLeftOperand){
+					/*ilyenkor csak mine van ott ezért az átadott Instance objektum kell oda*/
 					return (T) instance;
 				}else{
 					return (T) className;
