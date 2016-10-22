@@ -10,17 +10,17 @@ import datastructure.TileMap;
 
 public class QueryObjectTest {
 	public static void main(String[] args) {
-		InMemoryDatabase db = new InMemoryDatabase("db");
-		TileMap map = db.getMapByName("azeroth");
+		InMemoryDatabase db = new InMemoryDatabase("Game");
+		TileMap map = db.getMapByName("og");
 		
 		Postorder order = new Postorder();
 		
 		
 		Select select = new Select(db, "mine");
-		From from = new From("azeroth");
+		From from = new From("og");
 		
-		for(int i=0;i<db.getMapByName("azeroth").size();i++){
-			System.out.println(db.getMapByName("azeroth").get(i));
+		for(int i=0;i<db.getMapByName("og").size();i++){
+			System.out.println(db.getMapByName("og").get(i));
 		}
 		
 		
@@ -61,10 +61,10 @@ public class QueryObjectTest {
 		rootos.setOperator(Operators.AND);*/
 		
 		Select sel = new Select(db, "mine");
-		From fr = new From("azeroth");
+		From fr = new From("og");
 		Operand op3 = new Operand("mine",true);
-		Operand op4 = new Operand("körteee",false);
-		Operators oper2 = Operators.IS;
+		Operand op4 = new Operand(false, db,100,100);
+		Operators oper2 = Operators.COLLIDE;
 		WhereLetter let1 = new WhereLetter(op3, op4, oper2);
 		
 		/*metódus where után csak a distancefrom lehet, és így adhatjuk meg.*/

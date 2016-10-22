@@ -28,12 +28,16 @@ public class InMemoryDatabase {
 	
 	private String databaseName;
 	
+	private TileMap memoryMap;/*Ebbe csak ideiglenes objektumokat pakolunk a számolás végett(Ebbe rectangleek
+	vagy pointok vannak.)*/
+	private int memoryId = 0;/*Itt a memoryMap id kövi értéke.*/
 	
 	public InMemoryDatabase(String databaseName) {
 		/*Ez a konstruktor, amikor a projektben lévő adatbázis JSON-öket kezeljük, ez persze a ritkább*/
 		//maps = new HashMap<String, List<Instance>>();
 		maps = new ArrayList<TileMap>();
 		this.databaseName = databaseName;
+		this.memoryMap = new TileMap();
 		
 		FileInputStream in = null;
 		try{
@@ -59,6 +63,8 @@ public class InMemoryDatabase {
 	public InMemoryDatabase(File fileLocation) {
 		maps = new ArrayList<TileMap>();
 		this.databaseName = fileLocation.getName().split("\\.")[0];
+		
+		this.memoryMap = new TileMap();
 		
 		FileInputStream in = null;
 		try{
@@ -196,8 +202,101 @@ public class InMemoryDatabase {
 		}
 		
 	}
+	
+	public int addMemoryPoint(int x, int y){
+		Instance a = new NumberPrimitiv("Number", classes, memoryMap);
+		a.id = this.memoryId;
+		a.setValue(x);
+		this.memoryId++;
+		this.memoryMap.add(a);
+		
+		
+		Instance b = new NumberPrimitiv("Number", classes, memoryMap);
+		b.id = this.memoryId;
+		b.setValue(y);
+		this.memoryId++;
+		this.memoryMap.add(b);
+		
+		Instance p = new Instance("Point", classes, memoryMap);
+		p.id = this.memoryId;
+		this.memoryId++;
+		p.setAttribute("x", a.id);
+		p.setAttribute("y", b.id);
+		this.memoryMap.add(p);
+		
+		
+		return this.memoryId - 1;/*visszaadjuk az id-jét a beszúrt elemnek*/
+	}
+	
+	public int addMemoryRectangle(int x, int y, int width, int height){
+		Instance a = new NumberPrimitiv("Number", classes, memoryMap);
+		a.id = this.memoryId;
+		a.setValue(x);
+		this.memoryId++;
+		this.memoryMap.add(a);
+		
+		
+		Instance b = new NumberPrimitiv("Number", classes, memoryMap);
+		b.id = this.memoryId;
+		b.setValue(y);
+		this.memoryId++;
+		this.memoryMap.add(b);
+		
+		Instance w = new NumberPrimitiv("Number", classes, memoryMap);
+		w.id = this.memoryId;
+		w.setValue(width);
+		this.memoryId++;
+		this.memoryMap.add(w);
+		
+		Instance h = new NumberPrimitiv("Number", classes, memoryMap);
+		h.id = this.memoryId;
+		h.setValue(height);
+		this.memoryId++;
+		this.memoryMap.add(h);
+	
+		
+		Instance p = new Instance("Point", classes, memoryMap);
+		p.id = this.memoryId;
+		this.memoryId++;
+		p.setAttribute("x", a.id);
+		p.setAttribute("y", b.id);
+		this.memoryMap.add(p);
+		
+		Instance s = new Instance("Size", classes, memoryMap);
+		s.id = this.memoryId;
+		this.memoryId++;
+		s.setAttribute("width", w.id);
+		s.setAttribute("height", h.id);
+		this.memoryMap.add(s);
+		
+		Instance rec = new Instance("Rectangle", classes, memoryMap);
+		rec.id = this.memoryId;
+		this.memoryId++;
+		rec.setAttribute("location", p.id);
+		rec.setAttribute("size", s.id);
+		this.memoryMap.add(rec);
+		
+		
+		return this.memoryId - 1;
+	}
+	
+	/**
+	 * This method clear the memroy instance map. 
+	 * */
+	public void clearMemoryMap(){
+		this.memoryMap.clear();
+	}
 
 	
+	
+	
+	public TileMap getMemoryMap() {
+		return memoryMap;
+	}
+
+	public void setMemoryMap(TileMap memoryMap) {
+		this.memoryMap = memoryMap;
+	}
 
 	public List<ClassDefinition> getClasses() {
 		return classes;

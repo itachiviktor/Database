@@ -1,9 +1,5 @@
 package database.queryObject;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import database.InMemoryDatabase;
 import datastructure.Instance;
 
 public class WhereLetter implements WhereElement{
@@ -32,7 +28,6 @@ public class WhereLetter implements WhereElement{
 		this.operator = operator;
 		
 	}
-	
 	
 	public WhereLetter() {
 		// TODO Auto-generated constructor stub

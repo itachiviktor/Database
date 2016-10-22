@@ -2,6 +2,7 @@ package database.queryObject;
 
 import java.util.List;
 
+import database.InMemoryDatabase;
 import datastructure.Instance;
 
 public class Operand {
@@ -20,7 +21,12 @@ public class Operand {
 	public Number param1number;
 	public Number param2number;
 	
+	
+	
 	public boolean isLeftOperand;
+	
+	
+	public Instance memoryInstance;
 	
 	public Operand(String longOperand, boolean isLeftOperand) {
 		this.isLeftOperand = isLeftOperand;
@@ -44,6 +50,14 @@ public class Operand {
 		this.select = selectOperand;
 	}
 	
+	public Operand(boolean isLeftOperand, InMemoryDatabase db, int... params){
+		this.isLeftOperand = isLeftOperand;
+		if(params.length == 2){
+			this.memoryInstance = db.getMemoryMap().get(db.addMemoryPoint(params[0], params[1]));
+		}else if(params.length == 4){
+			this.memoryInstance = db.getMemoryMap().get(db.addMemoryRectangle(params[0], params[1], params[2], params[3]));
+		}
+	}
 	
 	/*Ha függvényhívás van az operandusban, akkor az alábbi 4 metódus közül legalább az egyiket meg kell hívni.*/
 	public void setMethodParameters(Number num, Select sel){
@@ -165,7 +179,9 @@ public class Operand {
 			}
 			return (T)actual;
 		}else{
-			if(boolValue != null){
+			if(memoryInstance != null){
+				return (T)memoryInstance;
+			}else if(boolValue != null){
 				return (T)boolValue;
 			}else if(numberValue != null){
 				return (T)numberValue;

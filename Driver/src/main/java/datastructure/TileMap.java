@@ -31,6 +31,10 @@ public class TileMap {
 		map.add(inst);
 	}
 	
+	public void clear(){
+		map.clear();
+	}
+	
 	public void remove(int index){
 		map.remove(index);
 	}

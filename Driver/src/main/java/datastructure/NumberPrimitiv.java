@@ -12,7 +12,10 @@ public class NumberPrimitiv extends Instance implements Comparable<Instance>{
 	
 	public NumberPrimitiv(String className, List<ClassDefinition> classes, TileMap map) {
 		super(className, classes, map);
-		
+	}
+	
+	public NumberPrimitiv(String className, List<ClassDefinition> classes) {
+		super(className, classes);
 	}
 	
 	@Override

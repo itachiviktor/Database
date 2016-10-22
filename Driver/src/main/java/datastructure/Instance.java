@@ -1,5 +1,7 @@
 package datastructure;
 
+import java.awt.Point;
+import java.awt.Rectangle;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,9 +48,34 @@ public class Instance implements Comparable<Instance>{
 			this.attributes.put(x, null);
 		}
 		
-		/*Itt beállítjuk neki a clanname típusát is.*/
+		/*Itt beállítjuk neki a classname típusát is.*/
 		this.className = classType.className;
 		
+	}
+	
+	public Instance(String className, List<ClassDefinition> classes){
+		this.classes = classes;
+		
+		this.attributes = new HashMap<String, Integer>();
+		
+		for(ClassDefinition x : classes){
+			if(x.className.equals(className)){
+				this.classType = x;
+				break;
+			}
+		}
+		
+		/*Itt definiálom a példánynak az attribútumokat, viszont itt még mindegyik nullra mutat.*/
+		
+		for(String x : classType.getAttributes().keySet()){
+			this.attributes.put(x, null);
+		}
+		
+		/*Itt beállítjuk neki a classname típusát is.*/
+		this.className = classType.className;
+		
+		/*Ez a konstruktor azért kell, hogy lehessen úgy instancet létrehozni, hogy az
+		 semmilyen mapbe ne legyen benne, ez csak a memóriába jön létre.*/
 	}
 	
 	public boolean hasThisAttribute(String attributeName){
@@ -123,13 +150,41 @@ public class Instance implements Comparable<Instance>{
 		if(operator == Operators.CLOSEST){
 			
 		}else if(operator == Operators.COLLIDE){
-			
+
+			if(this.attributes.containsKey("x") && this.attributes.containsKey("y") &&
+					this.attributes.containsKey("width") && this.attributes.containsKey("height")){
+				
+				if(otherOperande.className.equals("Rectangle")){
+					Rectangle a = new Rectangle((Integer)getAttribute("x").getValue(), (Integer)getAttribute("y").getValue(),
+							(Integer)getAttribute("width").getValue(), (Integer)getAttribute("height").getValue());
+					
+					Rectangle b = new Rectangle((Integer)otherOperande.getAttribute("location").getAttribute("x").getValue(),
+							(Integer)otherOperande.getAttribute("location").getAttribute("y").getValue(),
+							(Integer)otherOperande.getAttribute("size").getAttribute("width").getValue(),
+							(Integer)otherOperande.getAttribute("size").getAttribute("height").getValue());
+					
+					return a.intersects(b);
+				}else if(otherOperande.className.equals("Point")){
+					Rectangle a = new Rectangle((Integer)getAttribute("x").getValue(), (Integer)getAttribute("y").getValue(),
+							(Integer)getAttribute("width").getValue(), (Integer)getAttribute("height").getValue());
+					
+					Point b = new Point((Integer)otherOperande.getAttribute("x").getValue(), (Integer)otherOperande.getAttribute("y").getValue());
+					
+					return a.contains(b);
+					
+				}else{
+					return false;
+				}
+				
+			}else{
+				return false;
+			}
 		}else{
 			/*dobni kell valami exceptiont*/
 		}
 		
 		
-		return true;
+		return false;
 	}
 	
 	public boolean operate(Boolean otherOperande, Operators operator){
