@@ -2,16 +2,17 @@ package bridge;
 
 import org.junit.Test;
 
+import database.InMemoryDatabase;
 import database.LoadedDatabase;
 import driver.Driver;
 import junit.framework.TestCase;
 
 public class BridgeTesting extends TestCase {
-	LoadedDatabase db;
+	InMemoryDatabase db;
 	Driver driver;
 	
 	protected void setUp() throws Exception {
-		db = new LoadedDatabase();
+		db = new InMemoryDatabase("Game");
 		driver = new Driver(db);
 	}
 

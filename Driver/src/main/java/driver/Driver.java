@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.json.JSONObject;
 
+import database.InMemoryDatabase;
 import database.LoadedDatabase;
 import datastructure.ClassDefinition;
 import datastructure.Instance;
@@ -17,14 +18,14 @@ public class Driver {
 	
 	public List<Instance> resultSetList;
 	
-	private LoadedDatabase db;
 	private JSONDeserializer deserializer;
+	private InMemoryDatabase db;
 	
-	public Driver(LoadedDatabase db) {
+	public Driver(InMemoryDatabase db) {
 		this.db = db;
 		deserializer = new JSONDeserializer();
 		
-		JSONObject res = db.resultJSON();
+		JSONObject res = db.resultJSON("select * from og;");
 		
 		classes = deserializer.getClassDefinitions(res);
 		map = deserializer.getInstances(res);

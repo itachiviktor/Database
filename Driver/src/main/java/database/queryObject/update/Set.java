@@ -24,6 +24,7 @@ public class Set {
 	
 	public List<Instance> execute(List<Instance> instances){
 		List<Instance> modified = new ArrayList<Instance>();
+		List<Integer> modifiedId = new ArrayList<Integer>();
 		
 		instances:for(int i=0;i<instances.size();i++){
 			attributes:for(int j=0;j<attributes.size();j++){
@@ -34,6 +35,7 @@ public class Set {
 						
 						for(int k=0;k<attr.length;k++){
 							if(inst.hasThisAttribute(attr[k])){
+								modifiedId.add(inst.id);
 								inst = inst.getAttribute(attr[k]);
 							}else{
 								continue attributes;/*ez azt jelenti, hogy x attribútuma van, de y

@@ -11,6 +11,15 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONTokener;
+
+import database.queryObject.From;
+import database.queryObject.Operand;
+import database.queryObject.Operators;
+import database.queryObject.OrderBy;
+import database.queryObject.OrderBySort;
+import database.queryObject.Select;
+import database.queryObject.Where;
+import database.queryObject.WhereLetter;
 import datastructure.BooleanPrimitiv;
 import datastructure.ClassDefinition;
 import datastructure.Instance;
@@ -198,9 +207,86 @@ public class InMemoryDatabase {
 					classes.add(cdf);
 				}
 			}
-			
+		}
+	}
+	
+	public JSONObject resultJSON(String query){
+		/*Itt a query maga a lekérdezés string. Ezután átadjuk a parserenk, az hívógat.*/
+		
+		/*Itt végrehajtjuk a lekérdezésobjektumot, amit létrehozott a parser.*/
+		
+		Select sel = new Select(this, "mine");
+		From fr = new From("og");
+		Operand op3 = new Operand("mine",true);
+		Operand op4 = new Operand(false, this,50,50);
+		Operators oper2 = Operators.COLLIDE;
+		WhereLetter let1 = new WhereLetter(op3, op4, oper2);
+		
+		Where wh = new Where();
+		wh.setRoot(let1);
+		OrderBy by = new OrderBy("mine.id", OrderBySort.DESC);
+		
+		sel.setFrom(fr);
+		sel.setWhere(wh);
+		
+		/*a fenti részt a parser végzi, nekünk csak itt ezt az alsót kellene.*/
+		List<Instance> ini = sel.execute();
+		
+		
+		JSONObject response = new JSONObject();
+		
+		JSONArray instancearray = new JSONArray();
+		
+		/*getmapbynamehez a from értéke kellene*/
+		for(Instance inst : getMapByName("og").getMap()){
+			JSONObject ob = new JSONObject();
+			ob.put(String.valueOf(inst.id),inst.getJSONRepresentation());
+			instancearray.put(ob);
 		}
 		
+
+		JSONArray classesarray = new JSONArray();
+		
+		for(ClassDefinition dzs : classes){
+			JSONObject ob = new JSONObject();
+			ob.put(dzs.className, dzs.getJSONrepresentation());
+			classesarray.put(ob);
+		}
+		
+		JSONArray results = new JSONArray();
+		
+		for(int i=0;i<ini.size();i++){
+			results.put(ini.get(i).id);
+		}
+		
+		
+		response.put("classes", classesarray);
+		response.put("instances", instancearray);
+		response.put("results", results);
+		
+		
+
+		/*Csak a lekérdezendő mapről kell információ*/
+		JSONObject dbbb = new JSONObject();
+		dbbb.put("og", instancearray);
+		
+		JSONObject cls = new JSONObject();
+		cls.put("classes", classesarray);
+		
+		
+		JSONArray maps = new JSONArray();
+		maps.put(cls);
+		maps.put(dbbb);
+		
+		
+		JSONObject dbname = new JSONObject();
+		
+		dbname.put(databaseName, maps);
+		
+		
+		System.out.println(dbname);
+		
+		return response;
 	}
 	
 	public int addMemoryPoint(int x, int y){
@@ -288,8 +374,6 @@ public class InMemoryDatabase {
 	}
 
 	
-	
-	
 	public TileMap getMemoryMap() {
 		return memoryMap;
 	}
@@ -367,6 +451,23 @@ public class InMemoryDatabase {
 				
 			}
 		}
+	}
+	
+	public String classDefinitionsString(){
+		StringBuilder sb = new StringBuilder();
+		for(ClassDefinition x : this.classes){
+			sb.append(x.toString());
+		}
+		return sb.toString();
+	}
+	
+	public String mapInstancesString(){
+		StringBuilder sb = new StringBuilder();
+		for(Instance x : getMapByName("og").getMap()){
+			sb.append(x.toString());
+			sb.append(System.lineSeparator());
+		}
+		return sb.toString();
 	}
 	
 }

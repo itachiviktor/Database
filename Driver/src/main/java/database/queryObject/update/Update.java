@@ -8,7 +8,8 @@ import datastructure.Instance;
 
 public class Update {
 	public Where where;
-	public Set set;
+	private Set set;
+	private Move move;
 	
 	public String mapName;
 	public InMemoryDatabase db;
@@ -22,6 +23,30 @@ public class Update {
 	
 	public List<Instance> execute(){
 		/*Itt a visszatérési érték nem void, hanem a módosított elemek listája kell legyen majd.*/
-		return set.execute(where.execute(this.instances));
+		
+		if(this.set != null){
+			return set.execute(where.execute(this.instances));
+		}else if(this.move != null){
+			return move.execute(where.execute(this.instances), this.instances);
+		}else{
+			return null;
+		}
+		
+	}
+
+	public Set getSet() {
+		return set;
+	}
+
+	public void setSet(Set set) {
+		this.set = set;
+	}
+
+	public Move getMove() {
+		return move;
+	}
+
+	public void setMove(Move move) {
+		this.move = move;
 	}
 }

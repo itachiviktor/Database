@@ -31,6 +31,9 @@ public class Insert{
 		/*Itt , hogy melyik mapre insertelünk, azt a Connection objektumtól kell elkérni.*/
 		Instance instance = null;
 		
+		/*Szért kell, hogy a fentartott memory Insatnce pool törlődjön.*/
+		db.clearMemoryMap();
+		
 		values = builder.root.getValue();
 		if(layer != null){
 			return values.execute(layer);

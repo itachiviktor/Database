@@ -59,6 +59,7 @@ public class ClassDefinitionProvider {
 		entity.getAttributes().put("width", "Number");
 		entity.getAttributes().put("height", "Number");
 		entity.getAttributes().put("image", "String");
+		entity.getAttributes().put("solid", "Boolean");
 		
 		classes.add(string);
 		classes.add(number);

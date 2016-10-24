@@ -3,6 +3,7 @@ package bridge;
 
 import java.util.List;
 
+import database.InMemoryDatabase;
 import database.LoadedDatabase;
 import datastructure.ClassDefinition;
 import datastructure.Instance;
@@ -14,7 +15,7 @@ import driver.Result;
 public class Select {
 
 	public static void main(String[] args) {
-		LoadedDatabase db = new LoadedDatabase();
+		InMemoryDatabase db = new InMemoryDatabase("Game");
 		Driver driver = new Driver(db);
 		
 		List<Instance> res = driver.getResultSetList();
@@ -35,8 +36,8 @@ public class Select {
 			System.out.println(driver.map.get(i).toString());
 		}*/
 		
-		for(int i=0;i<db.classes.size();i++){
-			System.out.println(db.classes.get(i).toString());
+		for(int i=0;i<db.getClasses().size();i++){
+			System.out.println(db.getClasses().get(i).toString());
 		}
 			
 		

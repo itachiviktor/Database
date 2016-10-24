@@ -1,6 +1,12 @@
 package kulsomodositolekerdezesek;
 
+import java.awt.Rectangle;
+import java.util.ArrayList;
+import java.util.List;
+
 import database.InMemoryDatabase;
+import database.collision.Collision;
+import database.collision.DoublePoint;
 import database.queryObject.create.AttributeDescriptor;
 import database.queryObject.create.Class;
 import database.queryObject.create.Create;
@@ -10,28 +16,44 @@ import datastructure.InstanceMaker;
 
 public class Inserteles {
 
+	private static DoublePoint playerLocation;
+	
 	public static void main(String[] args) {
-		InMemoryDatabase db = new InMemoryDatabase("db");
+		Collision collision = new Collision();
 		
-		InstanceMaker maker = db.getMapByName("azeroth").getMaker();
+		DoublePoint db = new DoublePoint(100, 100);
+		Rectangle rectes = new Rectangle(0,0,20,20);
+		List<DoublePoint> maybePoint = new ArrayList<DoublePoint>();
 		
-		TreeBuilder builder = new TreeBuilder(db, maker);
+		List<Rectangle> tiles = new ArrayList<Rectangle>();
+		tiles.add(new Rectangle(200, 200, 20, 20));
+		tiles.add(new Rectangle(50, 50, 100, 100));
 		
+		maybePoint.add(db);
+		int maybeIndex = 0;
+		boolean finded = false;
+		boolean findFree = true;
 		
-		
-		builder.makeRoot("Entity", "azeroth");
-		builder.makeChildren("x", "600");
-		builder.makeChildren("y", "500");
-		builder.makeChildren("width", "30");
-		builder.makeChildren("height", "40");
-		
-		Values value = builder.root.getValue();
-		value.execute(0);
-		
-		db.persist();
-		
-		
-		System.out.println("lefutott");
+		while(!finded){
+			findFree = true;
+			for(int i=0;i<tiles.size();i++){
+				playerLocation = collision.newLocation(rectes, tiles.get(i), maybePoint.get(maybeIndex));
+				
+				if(playerLocation != null){
+					maybePoint.add(playerLocation);
+					
+					findFree = false;
+				}
+			}
+			
+			if(findFree){
+				System.out.println(maybePoint.get(maybeIndex).getX());
+				System.out.println(maybePoint.get(maybeIndex).getY());	
+				
+				finded = true;
+			}
+			maybeIndex++;
+		}	
 
 	}
 
