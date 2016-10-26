@@ -40,7 +40,8 @@ public class Move {
 					if(mapInstances.get(j).hasThisAttribute("x") && mapInstances.get(j).hasThisAttribute("y") &&
 							mapInstances.get(j).hasThisAttribute("width") &&
 							mapInstances.get(j).hasThisAttribute("height") && mapInstances.get(j).zlayer == inst.zlayer
-							&& mapInstances.get(j).id != inst.id && (Boolean)mapInstances.get(j).getAttribute("solid").getValue()){
+							&& mapInstances.get(j).id != inst.id && mapInstances.get(j).hasThisAttribute("solid") &&
+							(Boolean)mapInstances.get(j).getAttribute("solid").getValue()){
 						
 						tiles.add(mapInstances.get(j));
 					}

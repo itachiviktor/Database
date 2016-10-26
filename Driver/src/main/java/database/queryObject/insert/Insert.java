@@ -1,10 +1,13 @@
 package database.queryObject.insert;
 
+import java.util.List;
+
 import database.InMemoryDatabase;
+import database.queryObject.IQueryObject;
 import datastructure.Instance;
 import datastructure.InstanceMaker;
 
-public class Insert{
+public class Insert implements IQueryObject{
 	private String into; /*azeroth*/
 	private Values values;
 	private Integer layer;/*opcionális*/
@@ -27,7 +30,7 @@ public class Insert{
 		this.builder = new TreeBuilder(db, maker);
 	}
 
-	public int execute() {
+	public List<Instance> execute() {
 		/*Itt , hogy melyik mapre insertelünk, azt a Connection objektumtól kell elkérni.*/
 		Instance instance = null;
 		
@@ -36,11 +39,11 @@ public class Insert{
 		
 		values = builder.root.getValue();
 		if(layer != null){
-			return values.execute(layer);
+			values.execute(layer);
 		}else{
-			return values.execute(0);
+			values.execute(0);
 		}
-		
+		return null;
 		//return values.execute(param, instance, db.getMaps().get("azeroth"), this);/*a létrehozott példány id-je*/
 	}
 	
@@ -54,6 +57,16 @@ public class Insert{
 	
 	public void makeChildren(String attributeName){
 		this.builder.makeChildren(attributeName);
+		
+	}
+	
+	public TreeNode getActualTreeNode(){
+		return this.builder.actualNode;
+	}
+	
+	public void moveToParent(){
+		this.builder.moveToParent();
+		
 	}
 	
 	/**

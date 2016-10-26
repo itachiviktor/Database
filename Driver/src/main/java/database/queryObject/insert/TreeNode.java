@@ -32,6 +32,7 @@ public class TreeNode {
 	public String insertedMapName;/*Tudnia kell a nodenak, hogy melyik mapre fog beszúrni.*/
 	
 	public TreeNode(InMemoryDatabase db,  InstanceMaker maker, String className, String insertedMapName) {
+		/*Ezzel a gyökérelemet hozzuk létre.*/
 		this.db = db;
 		this.maker = maker;
 		this.className = className;
@@ -52,7 +53,6 @@ public class TreeNode {
 	
 	public void init(List<ClassDefinition> classes){
 		children = new ArrayList<TreeNode>();
-		
 		if(parent != null){
 			ClassDefinition parentClassDefinition = null;
 			/*a szülőnek az osztályleíróját keresem itt*/
@@ -64,13 +64,21 @@ public class TreeNode {
 				}
 			}
 			
-			/*Itt a saját osztálynevünket tudjuk meg Stringben.*/
+			
+			
+			/*Itt a saját osztálynevünket tudjuk meg Stringben(String értékben).*/
 			for(String x : parentClassDefinition.attributes.keySet()){
 				if(x.equals(this.attributeName)){
 					/*Megvan a saját osztályunk neve*/
 					this.className = parentClassDefinition.attributes.get(x);
 					break;
 				}
+			}
+			
+			if(this.className == null){
+				System.out.println("gázvan" + parentClassDefinition);
+			}else{
+				System.out.println(this.className + parentClassDefinition);
 			}
 			
 			/*Itt a saját osztályunk leíróját tudjuk meg*/
@@ -82,7 +90,7 @@ public class TreeNode {
 			}
 			
 		}else{
-			/*Itt a saját osztályunk leíróját tudjuk meg*/
+			/*Itt a saját osztályunk leíróját tudjuk meg, a gyökérelem esetében*/
 			for(int i=0;i<classes.size();i++){
 				if(classes.get(i).className.equals(this.className)){
 					this.nodeClassDefinition = classes.get(i);
@@ -93,7 +101,6 @@ public class TreeNode {
 	}
 	
 	public void setPrimitiv(String value){
-		
 		if(nodeClassDefinition.className.equals("String")){
 			this.stringPrimitiv = value;
 		}else if(nodeClassDefinition.className.equals("Number")){
@@ -208,9 +215,9 @@ public class TreeNode {
 			sb.append("ClassName: " + this.className + " attributeName: " + attributeName + System.lineSeparator());
 		}
 
-		for(int i=0;i<children.size();i++){
+		/*for(int i=0;i<children.size();i++){
 			sb.append(children.get(i).toString());
-		}
+		}*/
 		return sb.toString();
 	}
 }

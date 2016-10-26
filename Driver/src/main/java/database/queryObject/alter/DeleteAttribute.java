@@ -40,11 +40,15 @@ public class DeleteAttribute implements IAlterType{
 		return deletableAttributeName;
 	}
 
-	public void setDeletableAttributeName(String deletableAttributeName) {
-		this.deletableAttributeName = deletableAttributeName;
+
+	public void setStringAttributeName(String attributeName) {
+		this.deletableAttributeName = attributeName;
+		
 	}
-	
-	
-	
+
+	public void setStringOptionalValue(String value) {
+		/*erre itt niincs szükség*/
+		
+	}
 	
 }

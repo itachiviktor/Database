@@ -5,10 +5,11 @@ import java.util.List;
 import database.InMemoryDatabase;
 import database.LoadedDatabase;
 import database.queryObject.From;
+import database.queryObject.IQueryObject;
 import database.queryObject.Where;
 import datastructure.Instance;
 
-public class Delete {
+public class Delete implements IQueryObject{
 	public From from;
 	public Where where;
 	public InMemoryDatabase db;
@@ -20,7 +21,7 @@ public class Delete {
 		selectAttributes = selectObject.split("\\.");/*mine.stone.location.x ezt itt táolja darabonként*/
 	}
 	
-	public void execute(){
+	public List<Instance> execute(){
 		List<Instance> deletableObjects = where.execute(from.execute(db));
 		List<Instance> database = db.getMapByName(from.map).getMap();
 		for(int i=0;i<database.size();i++){
@@ -44,6 +45,8 @@ public class Delete {
 				}
 			}
 		}
+		
+		return null;
 	}
 	
 	public From getFrom() {

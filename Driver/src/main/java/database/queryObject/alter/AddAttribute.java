@@ -49,17 +49,9 @@ public class AddAttribute implements IAlterType{
 	}
 
 
-
 	public String getAttributeName() {
 		return attributeName;
 	}
-
-
-
-	public void setAttributeName(String attributeName) {
-		this.attributeName = attributeName;
-	}
-
 
 
 	public String getAttributeClassName() {
@@ -68,8 +60,15 @@ public class AddAttribute implements IAlterType{
 
 
 
-	public void setAttributeClassName(String attributeClassName) {
-		this.attributeClassName = attributeClassName;
+	public void setStringAttributeName(String attributeName) {
+		this.attributeName = attributeName;
+		
+	}
+
+
+	public void setStringOptionalValue(String value) {
+		this.attributeClassName = value;
+		
 	}
 	
 	

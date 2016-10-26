@@ -17,6 +17,7 @@ public class ClassDefinitionProvider {
 	private ClassDefinition size;
 	private ClassDefinition vector;
 	private ClassDefinition rectangle;
+	private ClassDefinition oval;
 	private ClassDefinition position;
 	private ClassDefinition node;
 	private ClassDefinition entity;
@@ -41,6 +42,12 @@ public class ClassDefinitionProvider {
 		rectangle = new ClassDefinition("Rectangle", maps, classes);
 		rectangle.getAttributes().put("location", "Point");
 		rectangle.getAttributes().put("size", "Size");
+		
+		oval = new ClassDefinition("Oval", maps, classes);
+		oval.setAttribute("x", "Number");
+		oval.setAttribute("y", "Number");
+		oval.setAttribute("width", "Number");
+		oval.setAttribute("height", "Number");
 		
 		position = new ClassDefinition("Position", maps, classes);
 		position.getAttributes().put("location", "Point");
@@ -68,6 +75,7 @@ public class ClassDefinitionProvider {
 		classes.add(size);
 		classes.add(vector);
 		classes.add(rectangle);
+		classes.add(oval);
 		classes.add(position);
 		classes.add(node);
 		classes.add(entity);

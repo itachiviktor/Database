@@ -37,14 +37,14 @@ public class AlterTest {
 		
 		
 		
-		Alter alter = new Alter(db, "Mine");
+		/*Alter alter = new Alter(db, "Mine");
 		
 		RenameClass alt = new RenameClass(db);
 		alt.setRenameClassToThisName("Djkfldsgk");
 		
 		alter.setAlterType(alt);
 		alter.execute();
-		
+		*/
 		
 		System.out.println("Módosítás után");
 		System.out.println();

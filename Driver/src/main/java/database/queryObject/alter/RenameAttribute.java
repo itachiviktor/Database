@@ -54,10 +54,13 @@ public class RenameAttribute implements IAlterType{
 		return attributeNameToThis;
 	}
 
-	public void setAttributeNameToThis(String attributeNameToThis) {
-		this.attributeNameToThis = attributeNameToThis;
+	public void setStringAttributeName(String attributeName) {
+		this.attributeName = attributeName;
+	}
+
+	public void setStringOptionalValue(String value) {
+		this.attributeNameToThis = value;
+		
 	}
 	
-	
-
 }

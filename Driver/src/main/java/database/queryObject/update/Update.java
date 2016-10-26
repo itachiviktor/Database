@@ -3,10 +3,11 @@ package database.queryObject.update;
 import java.util.List;
 
 import database.InMemoryDatabase;
+import database.queryObject.IQueryObject;
 import database.queryObject.Where;
 import datastructure.Instance;
 
-public class Update {
+public class Update implements IQueryObject{
 	public Where where;
 	private Set set;
 	private Move move;

@@ -41,8 +41,14 @@ public class RenameClass implements IAlterType{
 		return renameClassToThisName;
 	}
 
-	public void setRenameClassToThisName(String renameClassToThisName) {
-		this.renameClassToThisName = renameClassToThisName;
+
+	public void setStringAttributeName(String attributeName) {
+		this.renameClassToThisName = attributeName;
+	}
+
+	public void setStringOptionalValue(String value) {
+		/*erre itt nincs szükség*/
+		
 	}
 		
 }

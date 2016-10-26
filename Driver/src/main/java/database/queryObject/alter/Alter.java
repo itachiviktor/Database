@@ -1,9 +1,13 @@
 package database.queryObject.alter;
 
-import database.InMemoryDatabase;
-import datastructure.ClassDefinition;
+import java.util.List;
 
-public class Alter {
+import database.InMemoryDatabase;
+import database.queryObject.IQueryObject;
+import datastructure.ClassDefinition;
+import datastructure.Instance;
+
+public class Alter implements IQueryObject{
 	private IAlterType alterType;
 	private String className;
 	
@@ -14,8 +18,9 @@ public class Alter {
 		this.className = className;
 	}
 	
-	public void execute(){
+	public List<Instance> execute(){
 		alterType.execute(this.className);
+		return null;
 	}
 
 
