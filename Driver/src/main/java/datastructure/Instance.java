@@ -236,8 +236,6 @@ public class Instance implements Comparable<Instance>{
 	}
 
 	public int compareTo(Instance o) {
-		System.out.println("asd");
-		
 		return 0;
 	}
 	
@@ -318,8 +316,6 @@ public class Instance implements Comparable<Instance>{
 					map.remove(i);
 				}
 			}
-			
 		}
 	}
-	
 }

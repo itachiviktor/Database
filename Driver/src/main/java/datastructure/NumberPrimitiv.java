@@ -68,7 +68,6 @@ public class NumberPrimitiv extends Instance implements Comparable<Instance>{
 	}
 
 	public int compareTo(Instance o) {
-		System.out.println("call");
 		if(o.getValue() != null && o.getValue() instanceof Number){
 			Double thisvalue = value.doubleValue();
 			Number othervalue = (Number)o.getValue();

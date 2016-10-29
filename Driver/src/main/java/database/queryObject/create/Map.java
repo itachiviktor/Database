@@ -25,4 +25,14 @@ public class Map implements Executable{
 		
 		memory.persist();
 	}
+
+	public void insertAttribute() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addAttributeParameter(String type) {
+		// TODO Auto-generated method stub
+		
+	}
 }

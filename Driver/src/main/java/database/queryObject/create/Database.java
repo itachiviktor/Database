@@ -1,5 +1,6 @@
 package database.queryObject.create;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,6 +36,8 @@ public class Database implements Executable{
 		try {
 			FileWriter file = new FileWriter(this.name + ".json");
 			
+			File theDir = new File(this.name);
+			theDir.mkdir();
 			
 			JSONArray classesarray = new JSONArray();
 			
@@ -76,5 +79,15 @@ public class Database implements Executable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public void insertAttribute() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	public void addAttributeParameter(String type) {
+		// TODO Auto-generated method stub
+		
 	}
 }

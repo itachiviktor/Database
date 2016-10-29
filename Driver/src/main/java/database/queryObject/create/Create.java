@@ -1,10 +1,16 @@
 package database.queryObject.create;
 
-public class Create implements Executable{
+import java.util.List;
+
+import database.queryObject.IQueryObject;
+import datastructure.Instance;
+
+public class Create implements IQueryObject{
 	private Executable exec;
 
-	public void execute() {
+	public List<Instance> execute() {
 		exec.execute();
+		return null;
 	}
 
 	public Executable getExec() {

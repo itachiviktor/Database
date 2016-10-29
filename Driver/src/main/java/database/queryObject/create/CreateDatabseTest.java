@@ -43,7 +43,7 @@ public class CreateDatabseTest {
 		color.attrType = "String";
 		color.defValue = "yellow";
 		
-		cl.getAttributes().add(color);
+		//cl.getAttributes().add(color);
 		
 		create.setExec(cl);
 		create.execute();

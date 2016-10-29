@@ -26,18 +26,6 @@ public class TreeBuilderTest {
 			System.out.println(classes.get(i));
 		}*/
 		
-		Create create = new Create();
-		
-		Class cl = new Class("Bomb", db);
-		AttributeDescriptor color = new AttributeDescriptor();
-		color.attrName = "color";
-		color.attrType = "String";
-		color.defValue = "yellow";
-		
-		cl.getAttributes().add(color);
-		
-		create.setExec(cl);
-		create.execute();
 		
 		TreeBuilder masik = new TreeBuilder(db, maker);
 		masik.makeRoot("Bomb", "azeroth");

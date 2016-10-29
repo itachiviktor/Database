@@ -4,13 +4,16 @@ import database.InMemoryDatabase;
 import database.queryObject.From;
 import database.queryObject.IQueryObject;
 import database.queryObject.Where;
+import database.queryObject.wherebuilder.WhereBuilder;
 
 public class DeleteBuilder {
 	private Delete delete;
 	private InMemoryDatabase db;
 	private Where where;
+	private WhereBuilder whereBuilder;
 	
 	public DeleteBuilder(InMemoryDatabase db) {
+		this.whereBuilder = new WhereBuilder();
 		this.db = db;
 	}
 	
@@ -23,12 +26,23 @@ public class DeleteBuilder {
 		this.delete.setFrom(new From(mapName));
 	}
 	
-	public void setWhere(Where where){
-		this.delete.setWhere(where);
-	}
 	
 	public IQueryObject build(){
+		this.where = whereBuilder.build();
+		this.delete.where = this.where;
 		return this.delete;
+	}
+	
+	public void addOperandPiece(String piece){
+		this.whereBuilder.addOperandPiece(piece);
+	}
+	
+	public void addRoundBracket(){
+		this.whereBuilder.addRoundBracket();
+	}
+	
+	public void removeRoundBracket(){
+		this.whereBuilder.removeRoundBracket();
 	}
 		
 }

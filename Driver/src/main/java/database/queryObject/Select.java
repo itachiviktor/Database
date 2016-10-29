@@ -2,13 +2,10 @@ package database.queryObject;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import database.InMemoryDatabase;
-import database.LoadedDatabase;
 import datastructure.Instance;
-import datastructure.TileMap;
 
-public class Select {
+public class Select implements IQueryObject{
 	public From from;
 	public Where where;
 	public OrderBy orderby;

@@ -7,6 +7,7 @@ import java.util.List;
 import database.InMemoryDatabase;
 import database.queryObject.IQueryObject;
 import database.queryObject.Where;
+import database.queryObject.wherebuilder.WhereBuilder;
 
 /**
  * This class can prepare an Update QueryObject.
@@ -18,16 +19,13 @@ public class UpdateBuilder {
 	private Move move;
 	private List<Integer> moveValues;/*ezen pointra mozog(Point(10,10))*/
 	
+	private WhereBuilder whereBuilder;
 	private Where where;
 	
 	public UpdateBuilder(InMemoryDatabase db) {
+		this.whereBuilder = new WhereBuilder();
 		this.db = db;
 		this.moveValues = new ArrayList<Integer>();
-	}
-	
-	public void setWhere(Where where){
-		this.where = where;
-		update.where = where;
 	}
 	
 	public void createUpdate(String mapName){
@@ -35,8 +33,13 @@ public class UpdateBuilder {
 		this.update.db = this.db;
 	}
 	
-	public void setSet(){
-		this.set = new Set();
+	
+	public void setType(String type){
+		if(type.equalsIgnoreCase("set")){
+			this.set = new Set();
+		}else if(type.equalsIgnoreCase("move")){
+			this.move = new Move();
+		}
 	}
 	
 	public void addSetAttribute(String attribute){
@@ -47,15 +50,14 @@ public class UpdateBuilder {
 		this.set.setValue(value);
 	}
 	
-	public void setMove(){
-		this.move = new Move();
-	}
 	
 	public void setMoveValue(int value){
 		this.moveValues.add(value);
 	}
 	
 	public IQueryObject build(){
+		this.where = this.whereBuilder.build();
+		
 		if(this.move != null){
 			this.update.setMove(this.move);
 			
@@ -69,6 +71,18 @@ public class UpdateBuilder {
 		}else{
 			return null;
 		}
+	}
+	
+	public void addOperandPiece(String piece){
+		this.whereBuilder.addOperandPiece(piece);
+	}
+	
+	public void addRoundBracket(){
+		this.whereBuilder.addRoundBracket();
+	}
+	
+	public void removeRoundBracket(){
+		this.whereBuilder.removeRoundBracket();
 	}
 	
 }

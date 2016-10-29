@@ -21,10 +21,7 @@ public class Operand {
 	public Number param1number;
 	public Number param2number;
 	
-	
-	
 	public boolean isLeftOperand;
-	
 	
 	public Instance memoryInstance;
 	

@@ -2,7 +2,7 @@ package database.queryObject;
 
 import datastructure.Instance;
 
-public class WhereNode implements WhereElement,Cloneable{
+public class WhereNode implements WhereElement{
 	
 	private WhereElement leftChild;
 	private WhereElement rightChild;
@@ -92,5 +92,10 @@ public class WhereNode implements WhereElement,Cloneable{
 		leftChild.setCheckInstance(instance);
 		rightChild.setCheckInstance(instance);
 		System.out.println("lefutott");*/
+	}
+	
+	@Override
+	public String toString() {
+		return "Op: " + this.operator;
 	}
 }

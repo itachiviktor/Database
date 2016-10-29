@@ -80,6 +80,10 @@ public class OrderBy {
 		this.sort = sort;
 	}
 	
+	public void setSort(OrderBySort sort){
+		this.sort = sort;
+	}
+	
 	public List<Instance> execute(List<Instance> where){
 		List<Instance>resultList = new ArrayList<Instance>();
 		int min = 0;

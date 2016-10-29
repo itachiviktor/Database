@@ -25,8 +25,9 @@ public class CreateTest {
 		AttributeDescriptor color = new AttributeDescriptor();
 		color.attrName = "color";
 		color.attrType = "String";
+		//color.defValue = "piros";
 		
-		cl.getAttributes().add(color);
+		//cl.getAttributes().add(color);
 		
 		
 		create.setExec(cl);

@@ -13,11 +13,14 @@ public class Class implements Executable{
 	
 	private InMemoryDatabase memory;
 	
+	private List<String> attributeParameters;/*Ide jöne az attributumnév, típus, és a def érték*/
+	
 	public Class(String name, InMemoryDatabase memory) {
 		this.name = name;
 		this.memory = memory;
 		
 		this.attributes = new ArrayList<AttributeDescriptor>();
+		this.attributeParameters = new ArrayList<String>();
 		
 	}
 	
@@ -37,7 +40,28 @@ public class Class implements Executable{
 		memory.getClasses().add(classdefi);
 	}
 	
-	public List<AttributeDescriptor> getAttributes() {
-		return attributes;
+	
+	public void addAttributeParameter(String type){
+		this.attributeParameters.add(type);
+	}
+	
+	/**
+	 * This method called, when the parser find , symbol.
+	 * */
+	public void insertAttribute(){
+		AttributeDescriptor desc = new AttributeDescriptor();
+		
+		for(int i=0;i<this.attributeParameters.size();i++){
+			if(i == 0){
+				desc.attrType = this.attributeParameters.get(i);
+			}else if(i == 1){
+				desc.attrName = this.attributeParameters.get(i);
+			}else if(i == 2){
+				desc.defValue = this.attributeParameters.get(i);
+			}
+		}
+		
+		this.attributes.add(desc);
+		this.attributeParameters.clear();
 	}
 }

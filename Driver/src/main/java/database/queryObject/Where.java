@@ -7,7 +7,7 @@ import java.util.Stack;
 import datastructure.Instance;
 import datastructure.TileMap;
 
-public class Where {
+public class Where{
 	public List<Instance> result;
 	
 	private WhereElement root;
@@ -80,5 +80,9 @@ public class Where {
 		this.root = root;
 	}
 	
+	@Override
+	public String toString() {
+		return root.toString();
+	}
 	
 }
