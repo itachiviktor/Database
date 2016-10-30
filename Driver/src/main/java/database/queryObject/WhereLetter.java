@@ -22,6 +22,8 @@ public class WhereLetter implements WhereElement{
 	
 	public Instance selectedInstance;
 	
+	public boolean not = false;;
+	
 	public WhereLetter(Operand leftOperand, Operand rightOperand, Operators operator) {
 		this.leftOperand = leftOperand;
 		this.rightOperand = rightOperand;
@@ -37,31 +39,61 @@ public class WhereLetter implements WhereElement{
 	public boolean execute() {
 		/*itt kell kiszámolni*/
 		
-		if(leftInstanceValue != null){
-			if(rightInstanceValue != null){
-				return leftInstanceValue.operate(rightInstanceValue, operator);
-			}else if(rightBoolValue != null){
-				return leftInstanceValue.operate(rightBoolValue, operator);
-			}else if(rightNumberValue != null){
-				return leftInstanceValue.operate(rightNumberValue, operator);
-			}else if(rightOperandClassName != null){
-				return leftInstanceValue.isOperator(rightOperandClassName);
-			}
-		}else if(leftBoolValue != null){
-			if(rightBoolValue != null){
-				if(operator == Operators.EQ){
-					return rightBoolValue == leftBoolValue;
+		if(!not){
+			if(leftInstanceValue != null){
+				if(rightInstanceValue != null){
+					return leftInstanceValue.operate(rightInstanceValue, operator);
+				}else if(rightBoolValue != null){
+					return leftInstanceValue.operate(rightBoolValue, operator);
+				}else if(rightNumberValue != null){
+					return leftInstanceValue.operate(rightNumberValue, operator);
+				}else if(rightOperandClassName != null){
+					return leftInstanceValue.isOperator(rightOperandClassName);
 				}
-			}else if(rightInstanceValue != null){
-				return rightInstanceValue.operate(leftBoolValue, operator);
+			}else if(leftBoolValue != null){
+				if(rightBoolValue != null){
+					if(operator == Operators.EQ){
+						return rightBoolValue == leftBoolValue;
+					}
+				}else if(rightInstanceValue != null){
+					return rightInstanceValue.operate(leftBoolValue, operator);
+				}
+			}else if(leftNumberValue != null){
+				if(rightNumberValue != null){
+					return NumberCompare.compare(leftNumberValue, rightNumberValue, operator);
+				}else if(rightInstanceValue != null){
+					return NumberCompare.compare(leftNumberValue, (Number)rightInstanceValue.getValue(), operator);
+				}
 			}
-		}else if(leftNumberValue != null){
-			if(rightNumberValue != null){
-				return NumberCompare.compare(leftNumberValue, rightNumberValue, operator);
-			}else if(rightInstanceValue != null){
-				return NumberCompare.compare(leftNumberValue, (Number)rightInstanceValue.getValue(), operator);
+		}else{
+			/*Ez az az eset, amikor not kifejezés szerepel előtte.*/
+			if(leftInstanceValue != null){
+				if(rightInstanceValue != null){
+					return !(leftInstanceValue.operate(rightInstanceValue, operator));
+				}else if(rightBoolValue != null){
+					return !(leftInstanceValue.operate(rightBoolValue, operator));
+				}else if(rightNumberValue != null){
+					return !(leftInstanceValue.operate(rightNumberValue, operator));
+				}else if(rightOperandClassName != null){
+					return !(leftInstanceValue.isOperator(rightOperandClassName));
+				}
+			}else if(leftBoolValue != null){
+				if(rightBoolValue != null){
+					if(operator == Operators.EQ){
+						return !(rightBoolValue == leftBoolValue);
+					}
+				}else if(rightInstanceValue != null){
+					return !(rightInstanceValue.operate(leftBoolValue, operator));
+				}
+			}else if(leftNumberValue != null){
+				if(rightNumberValue != null){
+					return !(NumberCompare.compare(leftNumberValue, rightNumberValue, operator));
+				}else if(rightInstanceValue != null){
+					return !(NumberCompare.compare(leftNumberValue, (Number)rightInstanceValue.getValue(), operator));
+				}
 			}
 		}
+		
 		//throw new NumberFormatException();
 		
 		return false;	

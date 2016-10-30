@@ -13,7 +13,7 @@ public class DeleteBuilder {
 	private WhereBuilder whereBuilder;
 	
 	public DeleteBuilder(InMemoryDatabase db) {
-		this.whereBuilder = new WhereBuilder();
+		this.whereBuilder = new WhereBuilder(db);
 		this.db = db;
 	}
 	
@@ -28,8 +28,12 @@ public class DeleteBuilder {
 	
 	
 	public IQueryObject build(){
-		this.where = whereBuilder.build();
-		this.delete.where = this.where;
+		if(this.whereBuilder.getNodes().size() == 0){
+			this.delete.where = null;
+		}else{
+			Where where = this.whereBuilder.build();
+			this.delete.where = where;
+		}
 		return this.delete;
 	}
 	
@@ -43,6 +47,18 @@ public class DeleteBuilder {
 	
 	public void removeRoundBracket(){
 		this.whereBuilder.removeRoundBracket();
+	}
+	
+	public void removeAngledBracket(){
+		this.whereBuilder.removeAngledBracket();
+	}
+	
+	public void addPointParameter(int value){
+		this.whereBuilder.addPointParameter(value);
+	}
+	
+	public void addAngledBracket(){
+		this.whereBuilder.addAngledBracket();
 	}
 		
 }

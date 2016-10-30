@@ -24,26 +24,29 @@ public class QueryTest {
 		builder.setResultObject("mine");
 		builder.setFrom("og");
 		
-		builder.addRoundBracket();
+		
+
 		builder.addOperandPiece("mine.id");
 		builder.addOperandPiece(">=");
-		builder.addOperandPiece("100");
-		builder.addOperandPiece("AND");
+		builder.createAnAlSelect();
+		builder.setResultObject("mine.x");
+		builder.setFrom("og");
 		builder.addOperandPiece("mine.id");
-		builder.addOperandPiece("<=");
-		builder.addOperandPiece("150");
-		builder.removeRoundBracket();
-		builder.addOperandPiece("AND");
+		builder.addOperandPiece("=");
+		builder.createAnAlSelect();
+		builder.setResultObject("mine.y");
+		builder.setFrom("og");
 		builder.addOperandPiece("mine.id");
-		builder.addOperandPiece(">");
-		builder.addOperandPiece("10");
+		builder.addOperandPiece("=");
+		builder.addOperandPiece("162");
 		
-		builder.setOrderByAttribute("mine.id");
+		builder.buildAlSelectAndPutAsOperand();
+	
+
+		/*builder.setOrderByAttribute("mine.id");
 		builder.setOrderBySort("desc");
 		
-		builder.setLimit(2);
-		
-		
+		builder.setLimit(2);*/
 		
 		List<Instance> ini = builder.build().execute();
 		
@@ -55,10 +58,5 @@ public class QueryTest {
 		for(int i=0;i<ini.size();i++){
 			System.out.println(ini.get(i));
 		}
-		
-		
-		
-
 	}
-
 }

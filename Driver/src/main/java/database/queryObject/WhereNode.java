@@ -12,28 +12,27 @@ public class WhereNode implements WhereElement{
 	public WhereNode parent;
 	/*A gyökérnek nincs szülője*/
 	
-	boolean not = false;/*eza azt jelenti az operátorra nézve, hogy OR Not, azaz van e hozzá not.*/
+	public boolean not = false;/*eza azt jelenti az operátorra nézve, hogy OR Not, azaz van e hozzá not.*/
 	
 	public WhereNode(WhereElement leftChild, WhereElement rightChild) {
 		this.leftChild = leftChild;
 		this.rightChild = rightChild;
 	}
-	
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		return super.clone();
-	}
 
 	public boolean execute() {
+		if(not){
+			System.out.println("not");
+			System.out.println("skjsgkldjhgsdkjhgsdgjksgk");
+		}
+		
 		if(operator == Operators.AND){
 			if(not){
-				return (leftChild.execute() && !rightChild.execute());
+				return !(leftChild.execute() && rightChild.execute());
 			}
 			return (leftChild.execute() && rightChild.execute());
 		}else if(operator == Operators.OR){
 			if(not){
-				return (leftChild.execute() || !rightChild.execute());
+				return !(leftChild.execute() || rightChild.execute());
 			}
 			return (leftChild.execute() || rightChild.execute());
 		}
@@ -42,14 +41,15 @@ public class WhereNode implements WhereElement{
 	}
 	
 	public boolean execute(boolean left, boolean right){
+		
 		if(operator == Operators.AND){
 			if(not){
-				return (left && !right);
+				return !(left && !right);
 			}
 			return (left && right);
 		}else if(operator == Operators.OR){
 			if(not){
-				return (left || !right);
+				return !(left || !right);
 			}
 			return (left || right);
 		}

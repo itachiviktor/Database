@@ -12,16 +12,26 @@ public class SelectBuilder {
 	
 	public SelectBuilder(InMemoryDatabase db) {
 		this.db = db;
-		this.whereBuilder = new WhereBuilder();
 	}
 	
 	public void setResultObject(String result){
-		this.select = new Select(this.db, result);
+		if(this.whereBuilder == null){
+			this.select = new Select(this.db, result);
+		}else{
+			this.whereBuilder.setResultObject(result);
+		}
+		
 	}
 	
 	public void setFrom(String from){
-		this.from = new From(from);
-		this.select.setFrom(this.from);
+		if(this.whereBuilder == null){
+			this.from = new From(from);
+			this.select.setFrom(this.from);
+			this.whereBuilder = new WhereBuilder(this.db);
+		}else{
+			this.whereBuilder.setFrom(from);
+		}
+		
 	}
 	
 	public void addOperandPiece(String piece){
@@ -55,11 +65,35 @@ public class SelectBuilder {
 		this.select.setLimit(number);
 	}
 	
+	public void removeAngledBracket(){
+		this.whereBuilder.removeAngledBracket();
+	}
+	
+	public void addPointParameter(int value){
+		this.whereBuilder.addPointParameter(value);
+	}
+	
+	public void addAngledBracket(){
+		this.whereBuilder.addAngledBracket();
+	}
+	
 	
 	public IQueryObject build(){
-		Where where = this.whereBuilder.build();
-		this.select.setWhere(where);
+		if(this.whereBuilder.getNodes().size() == 0){
+			this.select.setWhere(null);
+		}else{
+			Where where = this.whereBuilder.build();
+			this.select.setWhere(where);
+		}
 		
 		return this.select;
+	}
+	
+	public void buildAlSelectAndPutAsOperand(){
+		this.whereBuilder.buildAlSelectAndPutAsOperand();
+	}
+	
+	public void createAnAlSelect(){
+		this.whereBuilder.createAnAlSelect();
 	}
 }

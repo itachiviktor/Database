@@ -15,8 +15,11 @@ public class BuilderNode {
 	
 	private WhereNode node;/*Ez csak csomópont elemeknek lesz*/
 	
-	public BuilderNode(int deep, Boolean side, WhereLetter operand, Operators operator) {
+	private boolean haveNot;
+	
+	public BuilderNode(int deep, Boolean side, WhereLetter operand, Operators operator, boolean haveNot) {
 		super();
+		this.haveNot = haveNot;
 		this.deep = deep;
 		this.side = side;
 		this.operand = operand;
@@ -68,7 +71,14 @@ public class BuilderNode {
 	}
 	
 	
-	
+	public boolean isHaveNot() {
+		return haveNot;
+	}
+
+	public void setHaveNot(boolean haveNot) {
+		this.haveNot = haveNot;
+	}
+
 	/*Ez a metódus csak azoknál hívható, amelyik csomópont, nem pedig levelek.*/
 	public WhereNode getNode() {
 		return node;
@@ -91,6 +101,9 @@ public class BuilderNode {
 			}
 		
 			this.node.setOperator(this.operator);
+			if(haveNot){
+				this.node.not = true;
+			}
 		}
 	}
 	

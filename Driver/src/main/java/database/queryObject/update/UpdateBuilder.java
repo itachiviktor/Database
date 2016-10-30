@@ -23,7 +23,7 @@ public class UpdateBuilder {
 	private Where where;
 	
 	public UpdateBuilder(InMemoryDatabase db) {
-		this.whereBuilder = new WhereBuilder();
+		this.whereBuilder = new WhereBuilder(db);
 		this.db = db;
 		this.moveValues = new ArrayList<Integer>();
 	}
@@ -56,7 +56,12 @@ public class UpdateBuilder {
 	}
 	
 	public IQueryObject build(){
-		this.where = this.whereBuilder.build();
+		if(this.whereBuilder.getNodes().size() == 0){
+			this.update.where = null;
+		}else{
+			Where where = this.whereBuilder.build();
+			this.update.where = where;
+		}
 		
 		if(this.move != null){
 			this.update.setMove(this.move);
@@ -83,6 +88,18 @@ public class UpdateBuilder {
 	
 	public void removeRoundBracket(){
 		this.whereBuilder.removeRoundBracket();
+	}
+	
+	public void removeAngledBracket(){
+		this.whereBuilder.removeAngledBracket();
+	}
+	
+	public void addPointParameter(int value){
+		this.whereBuilder.addPointParameter(value);
+	}
+	
+	public void addAngledBracket(){
+		this.whereBuilder.addAngledBracket();
 	}
 	
 }
