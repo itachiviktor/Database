@@ -2,10 +2,8 @@ package database.queryObject.insert;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import database.InMemoryDatabase;
 import datastructure.ClassDefinition;
-import datastructure.Instance;
 import datastructure.InstanceMaker;
 
 
@@ -64,8 +62,6 @@ public class TreeNode {
 				}
 			}
 			
-			
-			
 			/*Itt a saját osztálynevünket tudjuk meg Stringben(String értékben).*/
 			for(String x : parentClassDefinition.attributes.keySet()){
 				if(x.equals(this.attributeName)){
@@ -75,11 +71,11 @@ public class TreeNode {
 				}
 			}
 			
-			if(this.className == null){
+			/*if(this.className == null){
 				System.out.println("gázvan" + parentClassDefinition);
 			}else{
 				System.out.println(this.className + parentClassDefinition);
-			}
+			}*/
 			
 			/*Itt a saját osztályunk leíróját tudjuk meg*/
 			for(int i=0;i<classes.size();i++){
