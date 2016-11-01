@@ -91,7 +91,7 @@ public class Tokenizer {
 		    "AND", "OR", "NOT"
 		};
 		for (String keyword : keywords) {
-			if (name.toUpperCase() == keyword) {
+			if (name.toUpperCase().equals(keyword)) {
 				return true;
 			}
 		}
@@ -103,14 +103,14 @@ public class Tokenizer {
 	 */
 	Token readStringLiteral() {
 		String value = "";
-		index += 1;
+		++index;
 		while (index < text.length() && text.charAt(index) != '"') {
 			value += text.charAt(index);
+			++index;
 		}
 		if (index == text.length()) {
 			throw new RuntimeException("Missing closer \" character!");
 		}
-		index += 1;
 		Token token = new Token(TokenType.STRING, value);
 		return token;
 	}
@@ -122,7 +122,9 @@ public class Tokenizer {
 		String value = "";
 		while (index < text.length() && (isLetter(text.charAt(index)) || isDigit(text.charAt(index)))) {
 			value += text.charAt(index);
+			++index;
 		}
+		--index;
 		Token token;
 		if (isKeyword(value)) {
 			token = new Token(TokenType.KEYWORD, value);
@@ -142,7 +144,9 @@ public class Tokenizer {
 		String value = "";
 		while (index < text.length() && isDigit(text.charAt(index))) {
 			value += text.charAt(index);
+			++index;
 		}
+		--index;
 		Token token = new Token(TokenType.NUMBER, value);
 		return token;
 	}
@@ -158,6 +162,7 @@ public class Tokenizer {
 			if (nextCh == '=') {
 				if (ch == '<' || ch == '>' || ch == '=') {
 					value += nextCh;
+					++index;
 				}
 			}
 		}
