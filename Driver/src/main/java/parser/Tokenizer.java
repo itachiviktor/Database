@@ -127,7 +127,7 @@ public class Tokenizer {
 		--index;
 		Token token;
 		if (isKeyword(value)) {
-			token = new Token(TokenType.KEYWORD, value);
+			token = new Token(TokenType.KEYWORD, value.toUpperCase());
 		}
 		else {
 			token = new Token(TokenType.NAME, value);
