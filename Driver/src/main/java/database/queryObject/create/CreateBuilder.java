@@ -11,9 +11,6 @@ public class CreateBuilder {
 	
 	public CreateBuilder(InMemoryDatabase db) {
 		this.db = db;
-	}
-	
-	public void createCreate(){
 		this.create = new Create();
 	}
 	
