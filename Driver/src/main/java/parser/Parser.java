@@ -85,8 +85,43 @@ public class Parser {
 			throw new RuntimeException("Missing table name!");
 		}
 		builder.setFrom(tokens.get(3).value);
-		for (int tokenIndex = 5; tokenIndex < tokens.size(); ++tokenIndex) {
-			builder.addOperandPiece(tokens.get(tokenIndex).value);
+		
+		int tokenIndex = 5;
+		boolean hasSubSelect = false;
+		while (tokenIndex < tokens.size()) {
+			Token token = tokens.get(tokenIndex);
+			if (token.type == TokenType.KEYWORD && token.value.equals("ORDER")) {
+				++tokenIndex; // Skip the BY keyword!
+				++tokenIndex;
+				token = tokens.get(tokenIndex);
+				builder.setOrderBySort(token.value);
+				// TODO: Use order by attribute!
+			}
+			else if (token.type == TokenType.KEYWORD && token.value.equals("LIMIT")) {
+				++tokenIndex;
+				token = tokens.get(tokenIndex);
+				int limit = Integer.parseInt(token.value);
+				builder.setLimit(limit);
+			}
+			else if (token.type == TokenType.KEYWORD && token.value.equals("SELECT")) {
+				hasSubSelect = true;
+			}
+			else if (token.type == TokenType.PARENTHESIS) {
+				if (token.value.equals("(")) {
+					builder.addRoundBracket();
+				}
+				else {
+					builder.removeRoundBracket();
+				}
+			}
+			else {
+				builder.addOperandPiece(token.value);
+			}
+			++tokenIndex;
+		}
+		
+		if (hasSubSelect) {
+			builder.buildAlSelectAndPutAsOperand();
 		}
 	}
 	
