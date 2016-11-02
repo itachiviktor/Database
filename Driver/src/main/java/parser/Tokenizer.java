@@ -53,7 +53,7 @@ public class Tokenizer {
 	 * Is it a letter?
 	 */
 	public boolean isLetter(char ch) {
-		return Character.isLetter(ch);
+		return Character.isLetter(ch) || ch == '.';
 	}
 	
 	/**
@@ -67,7 +67,7 @@ public class Tokenizer {
 	 * Is it an operator?
 	 */
 	public boolean isOperator(char ch) {
-		String operatorPrefixes = "=<>+*-/.";
+		String operatorPrefixes = "=<>+*-/";
 		if (operatorPrefixes.indexOf(ch) != -1) {
 			return true;
 		}
@@ -87,7 +87,7 @@ public class Tokenizer {
 	public boolean isKeyword(String name) {
 		String[] keywords = {
 		    "SELECT", "UPDATE", "INSERT", "DELETE", "DROP",
-		    "WHERE", "IN", "HAS",
+		    "WHERE", "IN", "HAS", "FROM",
 		    "AND", "OR", "NOT"
 		};
 		for (String keyword : keywords) {

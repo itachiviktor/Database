@@ -94,7 +94,7 @@ public class UpdateBuilder {
 		this.whereBuilder.removeAngledBracket();
 	}
 	
-	public void addPointParameter(int value){
+	public void addPointParameter(String value){
 		this.whereBuilder.addPointParameter(value);
 	}
 	

@@ -14,10 +14,16 @@ import database.queryObject.update.UpdateBuilder;
  * Parse the query and return a query object.
  */
 public class Parser {
+	
+	private Tokenizer tokenizer;
+	
+	public Parser() {
+		this.tokenizer = new Tokenizer();
+	}
 
 	public IQueryObject parse(InMemoryDatabase db, String queryExpression) {
 		IQueryObject queryObject = null;
-		
+
 		ArrayList<Token> tokens = this.tokenizer.tokenize(queryExpression);
 		
 		if (tokens.get(0).type == TokenType.KEYWORD) {
@@ -64,6 +70,7 @@ public class Parser {
 	}
 	
 	private void parseSelect(SelectBuilder builder, ArrayList<Token> tokens) {
+		System.out.println(tokens);
 		if (tokens.size() < 4) {
 			throw new RuntimeException("The SELECT expression is too short!");
 		}
@@ -71,14 +78,16 @@ public class Parser {
 			throw new RuntimeException("Missing name after SELECT keyword!");
 		}
 		builder.setResultObject(tokens.get(1).value);
-		if (tokens.get(2).type != TokenType.KEYWORD || tokens.get(2).value != "KEYWORD") {
+		if (tokens.get(2).type != TokenType.KEYWORD || tokens.get(2).value.equals("FROM") == false) {
 			throw new RuntimeException("Missing FROM keyword!");
 		}
 		if (tokens.get(3).type != TokenType.NAME) {
 			throw new RuntimeException("Missing table name!");
 		}
 		builder.setFrom(tokens.get(3).value);
-		// ... build WHERE and further parts.
+		for (int tokenIndex = 5; tokenIndex < tokens.size(); ++tokenIndex) {
+			builder.addOperandPiece(tokens.get(tokenIndex).value);
+		}
 	}
 	
 	private void parseInsert(InsertBuilder builder, ArrayList<Token> tokens) {
@@ -103,5 +112,5 @@ public class Parser {
 	}
 	*/
 	
-	private Tokenizer tokenizer;
+
 }

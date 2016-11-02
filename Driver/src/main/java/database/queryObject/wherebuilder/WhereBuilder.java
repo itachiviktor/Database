@@ -15,6 +15,7 @@ import database.queryObject.SelectBuilder;
 import database.queryObject.StringToOperatorEnum;
 import database.queryObject.Where;
 import database.queryObject.WhereLetter;
+import datastructure.Instance;
 
 public class WhereBuilder {
 	private InMemoryDatabase db;
@@ -36,6 +37,8 @@ public class WhereBuilder {
 	public Point actualDistanceFromPoint;
 	public String actualDistanceFromAttribute;
 	private boolean distXValue = true;
+	
+	private boolean insideOfAngled = false;/*Ez az állapotváltozó jelzi,hogy most angledbe vok vagy sem*/
 	
 	public WhereBuilder(InMemoryDatabase db) {
 		this.actualDistanceFromPoint = new Point();
@@ -256,22 +259,38 @@ public class WhereBuilder {
 			this.actaulSelectBuilder.addAngledBracket();
 			return;
 		}
-		
+		this.insideOfAngled = true;
 		this.collidedPoint = new Point();
 		this.xValue = true;
 	}
 	
-	public void addPointParameter(int value){
+	public void addPointParameter(String value){
 		if(this.actaulSelectBuilder != null){
-			this.actaulSelectBuilder.addPointParameter(value);;
+			this.actaulSelectBuilder.addPointParameter(value);
 			return;
 		}
 		
 		if(xValue){
-			this.collidedPoint.x = value;
+			this.collidedPoint.x = Integer.valueOf(value);
 			xValue = !xValue;
 		}else{
-			this.collidedPoint.x = value;
+			this.collidedPoint.y = Integer.valueOf(value);
+			xValue = !xValue;
+		}
+	}
+	
+	public void addPointParameter(Select select){
+		if(this.actaulSelectBuilder != null){
+			this.actaulSelectBuilder.addPointParameter(select);
+			return;
+		}
+		List<Instance> inst = select.execute();
+
+		if(xValue){
+			this.collidedPoint.x = (Integer)inst.get(0).getValue();
+			xValue = !xValue;
+		}else{
+			this.collidedPoint.y = (Integer)inst.get(0).getValue();
 			xValue = !xValue;
 		}
 	}
@@ -285,6 +304,7 @@ public class WhereBuilder {
 		if(!sides.containsKey(actualLevel + 1)){
 			sides.put(actualLevel + 1, false);
 		}
+		
 		
 		Operand op3 = new Operand(operandList.get(0),true);
 		Operand op4 = new Operand(false, db,this.collidedPoint.x, this.collidedPoint.y);
@@ -305,7 +325,7 @@ public class WhereBuilder {
 		nodes.add(new BuilderNode(actualLevel + 1, sides.get(actualLevel + 1), let1, null, not));
 		
 		sides.replace(actualLevel + 1, sides.get(actualLevel + 1), !sides.get(actualLevel + 1));
-		
+		this.insideOfAngled = false;
 		this.operandList.clear();
 	}
 
@@ -349,6 +369,12 @@ public class WhereBuilder {
 		
 		
 		Select select = (Select)this.actaulSelectBuilder.build();
+		if(this.insideOfAngled){
+			addPointParameter(select);
+			return;
+		}
+		
+		
 		if(this.operandList.size() == 0){
 			
 		}else{

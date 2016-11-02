@@ -69,8 +69,12 @@ public class SelectBuilder {
 		this.whereBuilder.removeAngledBracket();
 	}
 	
-	public void addPointParameter(int value){
+	public void addPointParameter(String value){
 		this.whereBuilder.addPointParameter(value);
+	}
+	
+	public void addPointParameter(Select select){
+		this.whereBuilder.addPointParameter(select);
 	}
 	
 	public void addAngledBracket(){
@@ -97,3 +101,47 @@ public class SelectBuilder {
 		this.whereBuilder.createAnAlSelect();
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*SelectBuilder builder = new SelectBuilder(db);
+builder.setResultObject("mine");
+builder.setFrom("og");
+builder.addOperandPiece("mine.id");
+builder.addOperandPiece(">=");
+builder.createAnAlSelect();
+builder.setResultObject("mine.x");
+builder.setFrom("og");
+builder.addOperandPiece("mine.id");
+builder.addOperandPiece("=");
+builder.createAnAlSelect();
+builder.setResultObject("mine.y");
+builder.setFrom("og");
+builder.addOperandPiece("mine.id");
+builder.addOperandPiece("=");
+builder.addOperandPiece("162");
+
+builder.buildAlSelectAndPutAsOperand();
+
+
+/*builder.setOrderByAttribute("mine.id");
+builder.setOrderBySort("desc");
+
+builder.setLimit(2);*/

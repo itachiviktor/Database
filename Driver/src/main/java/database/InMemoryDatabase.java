@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import org.json.JSONTokener;
 
 import database.queryObject.From;
+import database.queryObject.IQueryObject;
 import database.queryObject.Operand;
 import database.queryObject.Operators;
 import database.queryObject.OrderBy;
@@ -468,6 +469,10 @@ public class InMemoryDatabase {
 			sb.append(System.lineSeparator());
 		}
 		return sb.toString();
+	}
+	
+	public void checkQueryObject(IQueryObject object){
+		/**/
 	}
 	
 }

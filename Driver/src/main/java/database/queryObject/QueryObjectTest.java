@@ -7,6 +7,7 @@ import database.InMemoryDatabase;
 import database.LoadedDatabase;
 import datastructure.Instance;
 import datastructure.TileMap;
+import parser.Parser;
 
 public class QueryObjectTest {
 	public static void main(String[] args) {
@@ -19,9 +20,10 @@ public class QueryObjectTest {
 		Select select = new Select(db, "mine");
 		From from = new From("og");
 		
-		for(int i=0;i<db.getMapByName("og").size();i++){
+	/*	for(int i=0;i<db.getMapByName("og").size();i++){
 			System.out.println(db.getMapByName("og").get(i));
-		}
+		}*/
+		
 		
 		
 		
