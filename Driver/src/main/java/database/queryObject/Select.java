@@ -16,12 +16,12 @@ public class Select implements IQueryObject{
 	String selectObject;
 	String[] selectAttributes;/*selectattributes[0] az mindig classname.*/
 	
+	
 	public Select(InMemoryDatabase db, String selectObject) {
 		this.db = db;
 		
 		this.selectObject = selectObject;
 		selectAttributes = this.selectObject.split("\\.");/*mine.stone.location.x ezt itt táolja darabonként*/
-		
 	}
 	
 	public From getFrom() {
@@ -113,6 +113,7 @@ public class Select implements IQueryObject{
 				}
 			}
 		}
+		
 	}
 	
 	private List<Instance> selectTheAttributes(List<Instance> returned, String[] attributes){

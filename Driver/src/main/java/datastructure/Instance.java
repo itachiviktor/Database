@@ -205,7 +205,7 @@ public class Instance implements Comparable<Instance>{
 		}
 	}
 	
-	public Number distanceFrom(double a, double b){
+	public Number distanceFrom(int a, int b){
 		double returnValue;
 		if(attributes.containsKey("x") && attributes.containsKey("y")){
 			Integer x = (Integer)getAttribute("x").getValue();

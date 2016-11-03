@@ -27,6 +27,7 @@ public class Operand {
 	
 	public Operand(String longOperand, boolean isLeftOperand) {
 		this.isLeftOperand = isLeftOperand;
+		this.longOperand = longOperand;
 		
 		if(longOperand.contains(".")){
 			attributes = longOperand.split("\\.");
@@ -47,13 +48,34 @@ public class Operand {
 		this.select = selectOperand;
 	}
 	
-	public Operand(boolean isLeftOperand, InMemoryDatabase db, int... params){
+	public Operand(boolean isLeftOperand, InMemoryDatabase db, String... params){
 		this.isLeftOperand = isLeftOperand;
 		if(params.length == 2){
-			this.memoryInstance = db.getMemoryMap().get(db.addMemoryPoint(params[0], params[1]));
+			this.memoryInstance = db.getMemoryMap().get(db.addMemoryPoint(Integer.valueOf(params[0]), Integer.valueOf(params[1])));
 		}else if(params.length == 4){
-			this.memoryInstance = db.getMemoryMap().get(db.addMemoryRectangle(params[0], params[1], params[2], params[3]));
+			this.memoryInstance = db.getMemoryMap().get(db.addMemoryRectangle(Integer.valueOf(params[0]), Integer.valueOf(params[1]), Integer.valueOf(params[2]), Integer.valueOf(params[3])));
 		}
+	}
+	
+	public Operand(boolean isLeftOperand, InMemoryDatabase db, Select... selects){
+		this.isLeftOperand = isLeftOperand;
+		if(selects.length == 2){
+			this.memoryInstance = db.getMemoryMap().get(db.addMemoryPoint(selects[0], selects[1]));
+		}
+	}
+	
+	public Operand(boolean isLeftOperand, InMemoryDatabase db, Select select, String string){
+		this.isLeftOperand = isLeftOperand;
+		
+		this.memoryInstance = db.getMemoryMap().get(db.addMemoryPoint(select, Integer.valueOf(string)));
+		
+	}
+	
+	public Operand(boolean isLeftOperand, InMemoryDatabase db, String string, Select select){
+		this.isLeftOperand = isLeftOperand;
+		
+		this.memoryInstance = db.getMemoryMap().get(db.addMemoryPoint(Integer.valueOf(string), select));
+		
 	}
 	
 	/*Ha függvényhívás van az operandusban, akkor az alábbi 4 metódus közül legalább az egyiket meg kell hívni.*/
@@ -107,19 +129,19 @@ public class Operand {
 				}
 				if(param1number != null){
 					if(param2number != null){
-						return (T)actual.distanceFrom((Double)param1number, (Double)param2number);
+						return (T)actual.distanceFrom((Integer)param1number, (Integer)param2number);
 					}else if(param2select != null){
 						List<Instance> result = param2select.execute();
 						
-						return (T)actual.distanceFrom((Double)param1number, (Double)result.get(0).getValue());
+						return (T)actual.distanceFrom((Integer)param1number, (Integer)result.get(0).getValue());
 					}
 				}else{
 					List<Instance> result1 = param1select.execute();
 					if(param2number != null){
-						return (T)actual.distanceFrom((Double)result1.get(0).getValue(), (Double)param2number);
+						return (T)actual.distanceFrom((Integer)result1.get(0).getValue(), (Integer)param2number);
 					}else if(param2select != null){
 						List<Instance> result2 = param2select.execute();
-						return (T)actual.distanceFrom((Double)result1.get(0).getValue(), (Double)result2.get(0).getValue());
+						return (T)actual.distanceFrom((Integer)result1.get(0).getValue(), (Integer)result2.get(0).getValue());
 					}
 				}
 				
@@ -128,18 +150,18 @@ public class Operand {
 			
 					if(param1number != null){
 						if(param2number != null){
-							return (T)instance.distanceFrom((Double)param1number, (Double)param2number);
+							return (T)instance.distanceFrom((Integer)param1number, (Integer)param2number);
 						}else if(param2select != null){
 							List<Instance> result = param2select.execute();
-							return (T)instance.distanceFrom((Double)param1number, (Double)result.get(0).getValue());
+							return (T)instance.distanceFrom((Integer)param1number, (Integer)result.get(0).getValue());
 						}
 					}else{
 						List<Instance> result1 = param1select.execute();
 						if(param2number != null){
-							return (T)instance.distanceFrom((Double)result1.get(0).getValue(), (Double)param2number);
+							return (T)instance.distanceFrom((Integer)result1.get(0).getValue(), (Integer)param2number);
 						}else if(param2select != null){
 							List<Instance> result2 = param2select.execute();
-							return (T)instance.distanceFrom((Double)result1.get(0).getValue(), (Double)result2.get(0).getValue());
+							return (T)instance.distanceFrom((Integer)result1.get(0).getValue(), (Integer)result2.get(0).getValue());
 						}
 					}
 				

@@ -21,10 +21,9 @@ public class WhereNode implements WhereElement{
 
 	public boolean execute() {
 		if(not){
-			System.out.println("not");
-			System.out.println("skjsgkldjhgsdkjhgsdgjksgk");
+			/*System.out.println("not");
+			System.out.println("skjsgkldjhgsdkjhgsdgjksgk");*/
 		}
-		
 		if(operator == Operators.AND){
 			if(not){
 				return !(leftChild.execute() && rightChild.execute());

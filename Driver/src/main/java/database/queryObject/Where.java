@@ -12,14 +12,15 @@ public class Where{
 	
 	private WhereElement root;
 	
+	
+	
 	public Where() {
 		result = new ArrayList<Instance>();
 	}
 	
 	public List<Instance> execute(List<Instance> list){
+
 		result = new ArrayList<Instance>();
-		
-		
 		
 		for(int i=0;i<list.size();i++){
 			
@@ -32,7 +33,6 @@ public class Where{
 				res = new ArrayList<WhereElement>();
 				res.add(root);
 			}
-			
 			
 			
 			for(int j=0;j<res.size();j++){

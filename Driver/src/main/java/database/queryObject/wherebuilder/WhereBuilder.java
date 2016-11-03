@@ -306,9 +306,22 @@ public class WhereBuilder {
 		}
 		
 		
-		Operand op3 = new Operand(operandList.get(0),true);
-		Operand op4 = new Operand(false, db,this.collidedPoint.x, this.collidedPoint.y);
-		Operators oper2 = StringToOperatorEnum.convertStringToEnum(operandList.get(1));
+		Operand op3 = null;
+		Operand op4 = null;
+		Operators oper2 = null;
+		
+		
+		if(operandList.get(0) != null){
+			op3 = new Operand(operandList.get(0),true);
+			op4 = new Operand(false, db,String.valueOf(this.collidedPoint.x), String.valueOf(this.collidedPoint.y));
+			oper2 = StringToOperatorEnum.convertStringToEnum(operandList.get(1));
+		}else if(operandList.get(2) != null){
+			op3 = new Operand(operandList.get(0),true);
+			op4 = new Operand(false, db,String.valueOf(this.collidedPoint.x), String.valueOf(this.collidedPoint.y));
+			oper2 = StringToOperatorEnum.convertStringToEnum(operandList.get(1));
+		}
+		
+		
 		
 		WhereLetter let1 = new WhereLetter(op3, op4, oper2);
 		

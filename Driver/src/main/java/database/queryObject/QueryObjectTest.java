@@ -65,7 +65,7 @@ public class QueryObjectTest {
 		Select sel = new Select(db, "mine");
 		From fr = new From("og");
 		Operand op3 = new Operand("mine",true);
-		Operand op4 = new Operand(false, db,100,100);
+		Operand op4 = new Operand(false, db,"100","100");
 		Operators oper2 = Operators.COLLIDE;
 		WhereLetter let1 = new WhereLetter(op3, op4, oper2);
 		

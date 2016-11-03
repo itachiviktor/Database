@@ -70,7 +70,7 @@ public class Parser {
 	}
 	
 	private void parseSelect(SelectBuilder builder, ArrayList<Token> tokens) {
-		System.out.println(tokens);
+		//System.out.println(tokens);
 		if (tokens.size() < 4) {
 			throw new RuntimeException("The SELECT expression is too short!");
 		}
@@ -190,7 +190,7 @@ public class Parser {
 				builder.addValue(token.value);
 			}
 			++tokenIndex;
-			token = tokens.get(tokenIndex);
+			token = tokens.get(tokenIndex-1);
 		}
 		if (tokenIndex < tokens.size()) {
 			// Skip the LAYER keyword.

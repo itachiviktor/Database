@@ -38,7 +38,6 @@ public class WhereLetter implements WhereElement{
 	
 	public boolean execute() {
 		/*itt kell kiszámolni*/
-		
 		if(!not){
 			if(leftInstanceValue != null){
 				if(rightInstanceValue != null){

@@ -219,7 +219,7 @@ public class InMemoryDatabase {
 		Select sel = new Select(this, "mine");
 		From fr = new From("og");
 		Operand op3 = new Operand("mine",true);
-		Operand op4 = new Operand(false, this,50,50);
+		Operand op4 = new Operand(false, this,"50","50");
 		Operators oper2 = Operators.COLLIDE;
 		WhereLetter let1 = new WhereLetter(op3, op4, oper2);
 		
@@ -289,6 +289,82 @@ public class InMemoryDatabase {
 		
 		return response;
 	}
+	
+	public int addMemoryPoint(Select x, Select y){
+		Instance a = new NumberPrimitiv("Number", classes, memoryMap);
+		a.id = this.memoryId;
+		a.setValue((Integer)x.execute().get(0).getValue());
+		this.memoryId++;
+		this.memoryMap.add(a);
+		
+		
+		Instance b = new NumberPrimitiv("Number", classes, memoryMap);
+		b.id = this.memoryId;
+		b.setValue((Integer)y.execute().get(0).getValue());
+		this.memoryId++;
+		this.memoryMap.add(b);
+		
+		Instance p = new Instance("Point", classes, memoryMap);
+		p.id = this.memoryId;
+		this.memoryId++;
+		p.setAttribute("x", a.id);
+		p.setAttribute("y", b.id);
+		this.memoryMap.add(p);
+		
+		
+		return this.memoryId - 1;/*visszaadjuk az id-jét a beszúrt elemnek*/
+	}
+	
+	public int addMemoryPoint(int x, Select y){
+		Instance a = new NumberPrimitiv("Number", classes, memoryMap);
+		a.id = this.memoryId;
+		a.setValue(x);
+		this.memoryId++;
+		this.memoryMap.add(a);
+		
+		
+		Instance b = new NumberPrimitiv("Number", classes, memoryMap);
+		b.id = this.memoryId;
+		b.setValue((Integer)y.execute().get(0).getValue());
+		this.memoryId++;
+		this.memoryMap.add(b);
+		
+		Instance p = new Instance("Point", classes, memoryMap);
+		p.id = this.memoryId;
+		this.memoryId++;
+		p.setAttribute("x", a.id);
+		p.setAttribute("y", b.id);
+		this.memoryMap.add(p);
+		
+		
+		return this.memoryId - 1;/*visszaadjuk az id-jét a beszúrt elemnek*/
+	}
+	
+	public int addMemoryPoint(Select x, int y){
+		Instance a = new NumberPrimitiv("Number", classes, memoryMap);
+		a.id = this.memoryId;
+		a.setValue((Integer)x.execute().get(0).getValue());
+		this.memoryId++;
+		this.memoryMap.add(a);
+		
+		
+		Instance b = new NumberPrimitiv("Number", classes, memoryMap);
+		b.id = this.memoryId;
+		b.setValue(y);
+		this.memoryId++;
+		this.memoryMap.add(b);
+		
+		Instance p = new Instance("Point", classes, memoryMap);
+		p.id = this.memoryId;
+		this.memoryId++;
+		p.setAttribute("x", a.id);
+		p.setAttribute("y", b.id);
+		this.memoryMap.add(p);
+		
+		
+		return this.memoryId - 1;/*visszaadjuk az id-jét a beszúrt elemnek*/
+	}
+	
 	
 	public int addMemoryPoint(int x, int y){
 		Instance a = new NumberPrimitiv("Number", classes, memoryMap);

@@ -1,6 +1,7 @@
 package database;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import database.queryObject.create.AttributeDescriptor;
@@ -73,11 +74,22 @@ public class Fut {
 			System.out.println(db.getMapByName("azeroth").get(i));
 		}*/
 		
-		for(int i=0;i<db.getClasses().size();i++){
+		/*for(int i=0;i<db.getClasses().size();i++){
 			System.out.println(db.getClasses().get(i));
 		}
 		
 		db.persist();
-		System.out.println("lefutott");
+		System.out.println("lefutott");*/
+		List<Integer> szamok = new ArrayList<Integer>();
+		
+		for(int i=0;i<200;i++){
+			szamok.add(i);
+		}
+		
+		for(int i=0;i<200;i++){
+			if(!(szamok.get(i) > 100 && szamok.get(i) < 150)){
+				System.out.println(szamok.get(i));
+			}
+		}
 	}
 }
