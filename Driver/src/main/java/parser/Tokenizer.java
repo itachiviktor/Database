@@ -87,7 +87,7 @@ public class Tokenizer {
 	public boolean isKeyword(String name) {
 		String[] keywords = {
 		    "SELECT", "UPDATE", "INSERT", "DELETE", "DROP",
-		    "WHERE", "IN", "HAS", "FROM",
+		    "WHERE", "IN", "HAS", "FROM", "VALUES", "INTO",
 		    "AND", "OR", "NOT"
 		};
 		for (String keyword : keywords) {

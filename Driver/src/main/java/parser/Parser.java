@@ -85,13 +85,121 @@ public class Parser {
 			throw new RuntimeException("Missing table name!");
 		}
 		builder.setFrom(tokens.get(3).value);
-		for (int tokenIndex = 5; tokenIndex < tokens.size(); ++tokenIndex) {
-			builder.addOperandPiece(tokens.get(tokenIndex).value);
+		
+		int tokenIndex = 5;
+		boolean hasSubSelect = false;
+		while (tokenIndex < tokens.size()) {
+			Token token = tokens.get(tokenIndex);
+			if (token.type == TokenType.KEYWORD && token.value.equals("ORDER")) {
+				++tokenIndex; // Skip the BY keyword!
+				++tokenIndex;
+				token = tokens.get(tokenIndex);
+				builder.setOrderBySort(token.value);
+				// TODO: Use order by attribute!
+			}
+			else if (token.type == TokenType.KEYWORD && token.value.equals("LIMIT")) {
+				++tokenIndex;
+				token = tokens.get(tokenIndex);
+				int limit = Integer.parseInt(token.value);
+				builder.setLimit(limit);
+			}
+			else if (token.type == TokenType.KEYWORD && token.value.equals("SELECT")) {
+				hasSubSelect = true;
+			}
+			else if (token.type == TokenType.PARENTHESIS) {
+				if (token.value.equals("(")) {
+					builder.addRoundBracket();
+				}
+				else {
+					builder.removeRoundBracket();
+				}
+			}
+			else {
+				builder.addOperandPiece(token.value);
+			}
+			++tokenIndex;
+		}
+		
+		if (hasSubSelect) {
+			builder.buildAlSelectAndPutAsOperand();
 		}
 	}
 	
 	private void parseInsert(InsertBuilder builder, ArrayList<Token> tokens) {
-		// ...
+		int tokenIndex = 1;
+		Token token = tokens.get(tokenIndex);
+		if (token.type == TokenType.NAME) {
+			builder.addClassName(token.value);
+		}
+		else {
+			throw new RuntimeException("Missing class name!");
+		}
+		++tokenIndex;
+		token = tokens.get(tokenIndex);
+		if (token.type != TokenType.PARENTHESIS || token.value.equals("(") == false) {
+			throw new RuntimeException("Missing parenthesis!");
+		}
+		++tokenIndex;
+		token = tokens.get(tokenIndex);
+		// Read attributes
+		while (tokenIndex < tokens.size() && (token.type == TokenType.KEYWORD && token.value.equals("INTO")) == false) {
+			if (token.type == TokenType.NAME) {
+				builder.addAttribute(token.value);
+			}
+			else if (token.type == TokenType.PARENTHESIS && token.value.equals(")")) {
+				// Check, that the ) is not directly before INTO keyword.
+				if (tokenIndex + 1 < tokens.size()) {
+					Token nextToken = tokens.get(tokenIndex);
+					if (nextToken.type != TokenType.KEYWORD || nextToken.value.equals("INTO") == false) {
+						builder.removeRoundBracketAttribute();						
+					}
+				}
+			}
+			++tokenIndex;
+			token = tokens.get(tokenIndex);			
+		}
+		if (tokenIndex == tokens.size()) {
+			throw new RuntimeException("Unexpected end of INSERT expression!");
+		}
+		// Skip the INTO keyword.
+		++tokenIndex;
+		token = tokens.get(tokenIndex);	
+		if (token.type == TokenType.NAME) {
+			builder.addMapName(token.value);
+		}
+		else {
+			throw new RuntimeException("Missing map name from INSERT expression!");
+		}
+		++tokenIndex;
+		token = tokens.get(tokenIndex);	
+		if (token.type != TokenType.KEYWORD || token.value.equals("VALUES") == false) {
+			throw new RuntimeException("Missing VALUES keyword from INSERT expression!");
+		}
+		++tokenIndex;
+		token = tokens.get(tokenIndex);	
+		if (token.type != TokenType.PARENTHESIS || token.value.equals("(") == false) {
+			throw new RuntimeException("Missing parenthesis before values from INSERT expression!");
+		}
+		++tokenIndex;
+		token = tokens.get(tokenIndex);
+		while (tokenIndex < tokens.size() && (token.type == TokenType.KEYWORD && token.value.equals("LAYER")) == false) {
+			if (token.type == TokenType.PARENTHESIS && token.value.equals("(")) {
+				builder.addRoundBracketValue();
+			}
+			else if (token.type != TokenType.PARENTHESIS && token.type != TokenType.OPERATOR) {
+				builder.addValue(token.value);
+			}
+			++tokenIndex;
+			token = tokens.get(tokenIndex);
+		}
+		if (tokenIndex < tokens.size()) {
+			// Skip the LAYER keyword.
+			++tokenIndex;
+			token = tokens.get(tokenIndex);
+			if (token.type == TokenType.NUMBER) {
+				// TODO: Set the layer to the builder!
+			}
+		}
 	}
 	
 	private void parseUpdate(UpdateBuilder builder, ArrayList<Token> tokens) {
