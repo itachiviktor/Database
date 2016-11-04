@@ -50,4 +50,9 @@ public class Update implements IQueryObject{
 	public void setMove(Move move) {
 		this.move = move;
 	}
+
+	public Where getWhere() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

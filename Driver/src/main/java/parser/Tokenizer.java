@@ -1,14 +1,15 @@
 package parser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Split input string to predefined tokens. 
  */
 public class Tokenizer {
 	
-	public ArrayList<Token> tokenize(String text) {
-		ArrayList<Token> tokens = new ArrayList<Token>();
+	public List<Token> tokenize(String text) {
+		List<Token> tokens = new ArrayList<Token>();
 		this.text = text;
 		this.index = 0;
 		Token token = getNextToken();
@@ -38,8 +39,14 @@ public class Tokenizer {
 			else if (ch == '"') {
 				token = readStringLiteral();
 			}
-			else if (ch == '(' || ch == ')') {
+			else if (this.isParenthesis(ch)) {
 				token = new Token(TokenType.PARENTHESIS, "" + ch);
+			}
+			else if (this.isBracket(ch)) {
+				token = new Token(TokenType.BRACKET, "" + ch);
+			}
+			else if (this.isBrace(ch)) {
+				token = new Token(TokenType.BRACE, "" + ch);
 			}
 			else if (ch == ';') {
 				token = new Token(TokenType.SEMICOLON, "" + ch);
@@ -82,13 +89,28 @@ public class Tokenizer {
 	}
 	
 	/**
+	 * Is it bracket?
+	 */
+	public boolean isBracket(char ch) {
+		return ch == '[' || ch == ']';
+	}
+	
+	/**
+	 * Is it bracket?
+	 */
+	public boolean isBrace(char ch) {
+		return ch == '{' || ch == '}';
+	}
+	
+	/**
 	 * Is keyword?
 	 */
 	public boolean isKeyword(String name) {
 		String[] keywords = {
 		    "SELECT", "UPDATE", "INSERT", "DELETE", "DROP",
 		    "WHERE", "IN", "HAS", "FROM", "VALUES", "INTO",
-		    "AND", "OR", "NOT"
+		    "AND", "OR", "NOT", "CREATE", "DEFAULT", "ALTER", "CLASS",
+		    "ASC", "DESC", "LIMIT", "ORDER"
 		};
 		for (String keyword : keywords) {
 			if (name.toUpperCase().equals(keyword)) {

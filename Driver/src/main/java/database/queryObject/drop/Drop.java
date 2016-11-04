@@ -5,6 +5,7 @@ import java.util.List;
 
 import database.InMemoryDatabase;
 import database.queryObject.IQueryObject;
+import database.queryObject.Where;
 import datastructure.Instance;
 
 public class Drop implements IQueryObject{
@@ -81,6 +82,11 @@ public class Drop implements IQueryObject{
 			}
 		}
 		
+		return null;
+	}
+
+	public Where getWhere() {
+		// TODO Auto-generated method stub
 		return null;
 	}	
 }

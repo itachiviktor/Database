@@ -7,5 +7,7 @@ public enum TokenType {
 	NUMBER,
 	OPERATOR,
 	SEMICOLON,
-	PARENTHESIS
+	PARENTHESIS,
+	BRACKET,
+	BRACE
 }

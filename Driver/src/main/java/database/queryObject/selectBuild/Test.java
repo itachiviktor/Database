@@ -1,16 +1,9 @@
 package database.queryObject.selectBuild;
 
 import java.util.List;
-
 import database.InMemoryDatabase;
-import database.queryObject.From;
 import database.queryObject.IQueryObject;
-import database.queryObject.Operand;
-import database.queryObject.Operators;
-import database.queryObject.Select;
-import database.queryObject.Where;
-import database.queryObject.WhereLetter;
-import database.queryObject.insert.InsertBuilder;
+import database.queryObject.delete.DeleteBuilder;
 import datastructure.Instance;
 import parser.Parser;
 
@@ -18,62 +11,41 @@ public class Test {
 	public static void main(String[] args) {
 		InMemoryDatabase db = new InMemoryDatabase("Game");
 		
-		SelectBuilder builder = new SelectBuilder(db);
-		builder.addResource("mine");
-		builder.setFrom("og");
-		builder.addOp("not");
-		builder.addOp("(");
-		builder.addOp("mine.id");
-		builder.addOp("<");
-		builder.addOp("100");
-		builder.addOp("AND");
-		builder.addOp("mine.id");
-		builder.addOp("=");
-		builder.addOp("150");
-		builder.addOp(")");
-	
-		
-		/*SelectBuilder builder = new SelectBuilder(db);
-		builder.addResource("mine");
-		builder.setFrom("og");
-		builder.addOp("mine");
-		builder.addOp("COLLIDE");
-		builder.addOp("[");
-		builder.addResource("mine.x");
-		builder.setFrom("og");
-		builder.addOp("mine.id");
-		builder.addOp("=");
-		builder.addOp("6");
-		builder.addOp("}");
-		builder.addResource("mine.x");
-		builder.setFrom("og");
-		builder.addOp("mine.id");
-		builder.addOp("=");
-		builder.addOp("6");
-		builder.addOp("}");
-		builder.addOp("]");*/
-	
-	
-		
-		
-		
-		
-		
-	
-		
-		
-		
 		/*Parser parser = new Parser();
 		IQueryObject ob = parser.parse(db, "INSERT Rectangle(size(width,height),location(x,y)) INTO og VALUES((100,100),(100,100))");
 
 		ob.execute();*/
 
+		Parser parser = new Parser();
+		//IQueryObject ob = parser.parse(db, "SELECT mine FROM og WHERE mine.distanceFrom[ {SELECT mine.x FROM og WHERE mine.id = {SELECT mine.x FROM og WHERE mine.id = 218}},10] > 10");
+		//IQueryObject ob = parser.parse(db, "CREATE CLASS Harcos(Number kor, String type, Number power DEFAULT 10, Point location)");
 		
-		List<Instance> inst = builder.build().execute();
+		//IQueryObject ob = parser.parse(db, "DROP DATABASE Pentek");
 		
+		/*DeleteBuilder builder = new DeleteBuilder(db);
+		builder.createDelete("mine");
+		builder.setFrom("og");
+		builder.startWhereCondition();
+		builder.addOp("mine.id");
+		builder.addOp("<");
+		builder.addOp("{");
+		builder.addResource("mine.width");
+		builder.setSelectFrom("og");
+		builder.addOp("mine.id");
+		builder.addOp("=");
+		builder.addOp("180");
+		builder.addOp("}");
+		
+		IQueryObject ob = builder.build();
+		
+		List<Instance> inst = ob.execute();*/
+		
+		IQueryObject ob = parser.parse(db, "SELECT mine FROM og WHERE mine.id > 100 ORDER mine.id DESC");
+		
+		db.persist();
 		//db.persist();
-		for(int i=0;i<inst.size();i++){
-			System.out.println(inst.get(i));
+		for(int i=0;i<db.getMapByName("og").size();i++){
+			System.out.println(db.getMapByName("og").get(i));
 		}
 	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import database.InMemoryDatabase;
 import database.queryObject.IQueryObject;
+import database.queryObject.Where;
 import datastructure.ClassDefinition;
 import datastructure.Instance;
 
@@ -30,6 +31,11 @@ public class Alter implements IQueryObject{
 
 	public void setAlterType(IAlterType alterType) {
 		this.alterType = alterType;
+	}
+
+	public Where getWhere() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

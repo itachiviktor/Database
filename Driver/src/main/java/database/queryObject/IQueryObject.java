@@ -6,4 +6,5 @@ import datastructure.Instance;
 
 public interface IQueryObject {
 	public List<Instance> execute();
+	public Where getWhere();
 }

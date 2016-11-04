@@ -4,6 +4,7 @@ import java.util.List;
 
 import database.InMemoryDatabase;
 import database.queryObject.IQueryObject;
+import database.queryObject.Where;
 import datastructure.Instance;
 import datastructure.InstanceMaker;
 
@@ -106,5 +107,10 @@ public class Insert implements IQueryObject{
 
 	public void setDb(InMemoryDatabase db) {
 		this.db = db;
+	}
+
+	public Where getWhere() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

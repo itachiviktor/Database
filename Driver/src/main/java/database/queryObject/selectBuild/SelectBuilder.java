@@ -2,6 +2,8 @@ package database.queryObject.selectBuild;
 
 import database.InMemoryDatabase;
 import database.queryObject.IQueryObject;
+import database.queryObject.OrderBy;
+import database.queryObject.OrderBySort;
 
 public class SelectBuilder {
 	private SelectNode actualSelect;
@@ -35,11 +37,11 @@ public class SelectBuilder {
 		actualSelect.setFrom(from);
 	}
 	
-	public void addRoundedRectangle(){
+	public void addRoundedBracket(){
 		actualSelect.addOp("(");
 	}
 	
-	public void removeRoundedRectangle(){
+	public void removeRoundedBracket(){
 		actualSelect.addOp(")");
 	}
 	
@@ -67,6 +69,16 @@ public class SelectBuilder {
 		return root;
 	}
 	
+	public void setOrderByAttribute(String attribute){
+		this.actualSelect.setOrderByAttribute(attribute);
+	}
 	
+	public void setOrderBySort(String orderSort){
+		this.actualSelect.setOrderBySort(orderSort);
+	}
 	
+	public void setLimit(int number){
+		this.actualSelect.setLimit(number);
+	}
+		
 }

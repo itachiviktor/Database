@@ -6,10 +6,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+
+import javax.swing.plaf.synth.SynthSpinnerUI;
+
 import database.InMemoryDatabase;
 import database.queryObject.From;
 import database.queryObject.Operand;
 import database.queryObject.Operators;
+import database.queryObject.OrderBy;
+import database.queryObject.OrderBySort;
 import database.queryObject.Select;
 import database.queryObject.StringToOperatorEnum;
 import database.queryObject.Where;
@@ -48,6 +53,10 @@ public class SelectNode {
 	
 	private ParameterPuffer parameterPuffer;
 	private boolean parameter = false;
+	
+	private OrderBy by;
+	private int limit = -1;
+	
 	
 	public SelectNode(InMemoryDatabase db, SelectBuilder selectBuilder) {
 		this.parameterPuffer = new ParameterPuffer();
@@ -125,7 +134,13 @@ public class SelectNode {
 		Select sel = new Select(db, this.getSource());
 		sel.setFrom(new From(this.from));
 		
+		if(op.size() == 0){
+			sel.where = null;
+			return sel;
+		}
+		
 		for(int i=0;i<op.size();i++){
+			System.out.println(op.get(i).getOp());
 			if(op.get(i).getOp() != null){
 				if(op.get(i).getOp().equals("[")){
 					parameter = true;
@@ -216,6 +231,14 @@ public class SelectNode {
 		Where where = whereBuild();
 		
 		sel.where = where;
+		
+		if(this.by != null){
+			sel.setOrderby(by);
+		}
+		
+		if(this.limit > -1){
+			sel.setLimit(limit);
+		}
 		return sel;
 	}
 	
@@ -260,7 +283,10 @@ public class SelectNode {
 	}
 	
 	private void addOperandPiece(String piece){
-		if(piece.equals("}")){
+		if(piece.equals("{")){
+		
+		}
+		else if(piece.equals("}")){
 			this.selectBuilder.setActualSelect(this.parent);
 		}else if(piece.equals("(")){
 			addRoundBracket();
@@ -419,6 +445,24 @@ public class SelectNode {
 		
 		return where;
 		
+	}
+	
+	public void setOrderByAttribute(String attribute){
+		by = new OrderBy(attribute);
+	}
+	
+	public void setOrderBySort(String orderSort){
+		
+		if(orderSort.equalsIgnoreCase("ASC")){
+			by.setSort(OrderBySort.ASC);
+		}else if(orderSort.equalsIgnoreCase("DESC")){
+			by.setSort(OrderBySort.DESC);
+		}
+		
+	}
+	
+	public void setLimit(int number){
+		this.limit = number;
 	}
 	
 	private List<BuilderNode> sortedList(){

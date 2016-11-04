@@ -84,6 +84,7 @@ public class Select implements IQueryObject{
 		}
 		
 		if(orderby != null){
+			System.out.println("DESC safa");
 			if(where != null){
 				if(this.selectAttributes.length > 1){
 					return selectTheAttributes(orderby.execute(where.execute(from.execute(db))), this.selectAttributes);
