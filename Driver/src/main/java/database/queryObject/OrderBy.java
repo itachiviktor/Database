@@ -85,6 +85,7 @@ public class OrderBy {
 	}
 	
 	public List<Instance> execute(List<Instance> where){
+		
 		List<Instance>resultList = new ArrayList<Instance>();
 		int min = 0;
 		while(where.size() > 0){

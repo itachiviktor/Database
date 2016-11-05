@@ -57,14 +57,23 @@ public class Select implements IQueryObject{
 	}
 
 	public List<Instance> execute(){
+		
 		if(limit > -1){
 			/*Ha nincs limit a lekérdezésben, akkor az alapértelmezett értéke -1.*/
 			List<Instance> executed;
 			
 			if(where != null){
-				executed = orderby.execute(where.execute(from.execute(db)));
+				if(orderby != null){
+					executed = orderby.execute(where.execute(from.execute(db)));
+				}else{
+					executed = where.execute(from.execute(db));
+				}
 			}else{
-				executed = orderby.execute(from.execute(db));
+				if(orderby != null){
+					executed = orderby.execute(from.execute(db));
+				}else{
+					executed = from.execute(db);
+				}
 			}
 			
 			List<Instance> result = new ArrayList<Instance>();
@@ -84,7 +93,7 @@ public class Select implements IQueryObject{
 		}
 		
 		if(orderby != null){
-			System.out.println("DESC safa");
+			
 			if(where != null){
 				if(this.selectAttributes.length > 1){
 					return selectTheAttributes(orderby.execute(where.execute(from.execute(db))), this.selectAttributes);
@@ -99,6 +108,7 @@ public class Select implements IQueryObject{
 				}
 			}
 		}else{
+			
 			if(where != null){
 				if(this.selectAttributes.length > 1){
 					return selectTheAttributes(where.execute(from.execute(db)), this.selectAttributes);

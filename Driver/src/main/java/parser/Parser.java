@@ -135,7 +135,7 @@ public class Parser {
 	}
 	
 	private void parseSelect(SelectBuilder builder, List<Token> tokens) {
-		System.out.println(tokens);
+		//System.out.println(tokens);
 		if (tokens.size() < 4) {
 			throw new RuntimeException("The SELECT expression is too short!");
 		}
@@ -158,7 +158,6 @@ public class Parser {
 				// ++tokenIndex; // Skip the BY keyword!
 				++tokenIndex;
 				token = tokens.get(tokenIndex);
-				System.out.println(token.value + " mostirtam");
 				builder.setOrderByAttribute(token.value);
 				Token nextToken = tokens.get(tokenIndex + 1);
 				if (nextToken.type == TokenType.KEYWORD && (nextToken.value.equals("ASC") || nextToken.value.equals("DESC"))) {
@@ -315,7 +314,64 @@ public class Parser {
 	}
 	
 	private void parseDelete(DeleteBuilder builder, List<Token> tokens) {
-
+		//System.out.println(tokens);
+				if (tokens.size() < 4) {
+					throw new RuntimeException("The DELETE expression is too short!");
+				}
+				if (tokens.get(1).type != TokenType.NAME) {
+					throw new RuntimeException("Missing name after DELETE keyword!");
+				}
+				builder.addResource(tokens.get(1).value);
+				if (tokens.get(2).type != TokenType.KEYWORD || tokens.get(2).value.equals("FROM") == false) {
+					throw new RuntimeException("Missing FROM keyword!");
+				}
+				if (tokens.get(3).type != TokenType.NAME) {
+					throw new RuntimeException("Missing table name!");
+				}
+				builder.setFrom(tokens.get(3).value);
+				
+				int tokenIndex = 5;
+				while (tokenIndex < tokens.size()) {
+					Token token = tokens.get(tokenIndex);
+					if (token.type == TokenType.KEYWORD && token.value.equals("ORDER")) {
+						// ++tokenIndex; // Skip the BY keyword!
+						++tokenIndex;
+						token = tokens.get(tokenIndex);
+						builder.setOrderByAttribute(token.value);
+						Token nextToken = tokens.get(tokenIndex + 1);
+						if (nextToken.type == TokenType.KEYWORD && (nextToken.value.equals("ASC") || nextToken.value.equals("DESC"))) {
+							builder.setOrderBySort(nextToken.value);
+							++tokenIndex;
+						}
+						
+						// TODO: Use order by attribute!
+					}
+					else if (token.type == TokenType.KEYWORD && token.value.equals("LIMIT")) {
+						++tokenIndex;
+						token = tokens.get(tokenIndex);
+						int limit = Integer.parseInt(token.value);
+						builder.setLimit(limit);
+					}
+					else if (token.type == TokenType.PARENTHESIS) {
+						if (token.value.equals("(")) {
+							builder.addRoundedBracket();
+						}
+						else {
+							builder.removeRoundedBracket();
+						}
+					}
+					else if (token.type == TokenType.BRACE && token.value.equals("{")) {
+						List<Token> selectTokens = this.extractSubSelectTokens(tokens, tokenIndex);
+						this.parseSelect(builder, selectTokens);
+						tokenIndex += selectTokens.size() + 1;
+						token = tokens.get(tokenIndex);
+						builder.addOp(token.value);
+					}
+					else {
+						builder.addOp(token.value);
+					}
+					++tokenIndex;
+				}
 	}
 	
 	private void parseDrop(DropBuilder builder, List<Token> tokens) {

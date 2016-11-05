@@ -27,6 +27,7 @@ import datastructure.Instance;
 import datastructure.NumberPrimitiv;
 import datastructure.StringPrimitiv;
 import datastructure.TileMap;
+import parser.Parser;
 
 public class InMemoryDatabase {
 	
@@ -549,6 +550,17 @@ public class InMemoryDatabase {
 	
 	public void checkQueryObject(IQueryObject object){
 		/**/
+	}
+	
+	/**
+	 * This method calls by the driver
+	 * 
+	 * */
+	public List<Instance> executeQuery(String query){
+		Parser parser = new Parser();
+		IQueryObject object = parser.parse(this, query);
+		
+		return object.execute();
 	}
 	
 }

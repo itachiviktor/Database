@@ -3,6 +3,7 @@ package database.queryObject.selectBuild;
 import java.util.List;
 import database.InMemoryDatabase;
 import database.queryObject.IQueryObject;
+import database.queryObject.delete.Delete;
 import database.queryObject.delete.DeleteBuilder;
 import datastructure.Instance;
 import parser.Parser;
@@ -40,12 +41,13 @@ public class Test {
 		
 		List<Instance> inst = ob.execute();*/
 		
-		IQueryObject ob = parser.parse(db, "SELECT mine FROM og WHERE mine.id > 100 ORDER mine.id DESC");
-		
+		IQueryObject ob = parser.parse(db, "DELETE mine FROM og WHERE mine.id > 10");
+		List<Instance> inst = ob.execute();
+	
 		db.persist();
 		//db.persist();
-		for(int i=0;i<db.getMapByName("og").size();i++){
-			System.out.println(db.getMapByName("og").get(i));
-		}
+		/*for(int i=0;i<inst.size();i++){
+			System.out.println(inst.get(i));
+		}*/
 	}
 }

@@ -80,5 +80,32 @@ public class SelectBuilder {
 	public void setLimit(int number){
 		this.actualSelect.setLimit(number);
 	}
+	
+	
+
+	public InMemoryDatabase getDb() {
+		return db;
+	}
+
+	public void setDb(InMemoryDatabase db) {
+		this.db = db;
+	}
+
+	public int getRootNumber() {
+		return rootNumber;
+	}
+
+	public void setRootNumber(int rootNumber) {
+		this.rootNumber = rootNumber;
+	}
+
+	public void setRoot(SelectNode root) {
+		this.root = root;
+	}
+	
+	
+	
+	
+	
 		
 }
